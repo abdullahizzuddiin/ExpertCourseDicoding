@@ -1,16 +1,41 @@
 package id.dicoding.expertcourse.model;
 
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
 
-public class Movie {
+public class Movie implements Parcelable {
     private String title, banner, releasedYear, overview, revenue, budget, runtime, originalLanguage;
     private int reviewScore;
 
     public Movie() {
 
     }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        banner = in.readString();
+        releasedYear = in.readString();
+        overview = in.readString();
+        revenue = in.readString();
+        budget = in.readString();
+        runtime = in.readString();
+        originalLanguage = in.readString();
+        reviewScore = in.readInt();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -86,5 +111,23 @@ public class Movie {
 
     public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(banner);
+        dest.writeString(releasedYear);
+        dest.writeString(overview);
+        dest.writeString(revenue);
+        dest.writeString(budget);
+        dest.writeString(runtime);
+        dest.writeString(originalLanguage);
+        dest.writeInt(reviewScore);
     }
 }

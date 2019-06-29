@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">ExpertCourse</string>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="movie_name_example">The Girl in the Spider\'s Webstorm ft PHPStorm</string>
+    <string name="movie_banner_content_description">Movie Banner</string>
+    <string name="movie_rate_text_example">4.5/5</string>
+    <string name="rate_text">(%1$s/5)</string>
+    <string name="release_year_example">2018</string>
+    <string name="movie_overview_example">In Stockholm, Sweden, hacker Lisbeth Salander is hired by Frans Balder, a computer engineer, to retrieve a program that he believes it is too dangerous to exist.</string>
+    <string name="overview_label">Overview</string>
+    <string name="fact_label">Some Facts!</string>
+    <string name="budget_label">Budget</string>
+    <string name="revenue_label">Revenue</string>
+    <string name="runtime_label">Runtime</string>
+    <string name="original_language_label">Original Languange</string>
+    <string name="revenue_example">$1,143,689,193.00</string>
+    <string name="budget_example">$160,000,000.00</string>
+    <string name="runtime_example">2h 24m</string>
+    <string name="original_language_example">English</string>
+    <string name="extra_data_movie">extra_data_movie</string>
 </resources>
