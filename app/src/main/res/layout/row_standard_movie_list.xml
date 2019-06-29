@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/iv_movie_logo_row_standard"
+        android:layout_width="@dimen/movie_logo_row_standard_width"
+        android:layout_height="@dimen/movie_logo_row_standard_height"
+        android:contentDescription="@string/movie_banner_content_description"
+        android:scaleType="fitXY"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_movie_title_row_standard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_movie_logo_row_standard"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/movie_name_example" />
+
+    <RatingBar
+        android:id="@+id/rb_movie_review_score_row_standard"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        app:layout_constraintStart_toStartOf="@+id/tv_movie_release_year_row_standard"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_year_row_standard"
+        tools:rating="4.5" />
+
+    <TextView
+        android:id="@+id/tv_movie_rate_text_row_standard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toEndOf="@+id/rb_movie_review_score_row_standard"
+        app:layout_constraintTop_toTopOf="@+id/rb_movie_review_score_row_standard"
+        tools:text="@string/movie_rate_text_example" />
+
+    <TextView
+        android:id="@+id/tv_movie_release_year_row_standard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="@+id/tv_movie_title_row_standard"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_title_row_standard"
+        tools:text="@string/release_year_example" />
+</androidx.constraintlayout.widget.ConstraintLayout>

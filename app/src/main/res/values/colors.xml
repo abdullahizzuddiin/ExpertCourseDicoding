@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- https://www.colorhexa.com/fd6542 -->
+    <color name="colorPrimary">#FD6542</color>
+    <color name="colorPrimaryDark">#fc3608</color>
+    <color name="colorAccent">#42dafd</color>
 </resources>
