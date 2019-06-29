@@ -7,7 +7,6 @@ import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
 public class Movie {
     private String title, banner, releasedYear, overview, revenue, budget, runtime, originalLanguage;
     private int reviewScore;
-    private List<Cast> topBilledCasts;
 
     public Movie() {
 
@@ -46,7 +45,7 @@ public class Movie {
     }
 
     public float getReviewScoreFiveMaxFormat() {
-        return parseToPerFiveRate(reviewScore);
+        return parseToPerFiveRate(getReviewScore());
     }
 
     public void setReviewScore(int reviewScore) {
@@ -87,13 +86,5 @@ public class Movie {
 
     public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
-    }
-
-    public List<Cast> getTopBilledCasts() {
-        return topBilledCasts;
-    }
-
-    public void setTopBilledCasts(List<Cast> topBilledCasts) {
-        this.topBilledCasts = topBilledCasts;
     }
 }
