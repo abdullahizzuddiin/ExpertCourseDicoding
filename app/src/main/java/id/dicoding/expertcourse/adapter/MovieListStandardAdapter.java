@@ -2,7 +2,6 @@ package id.dicoding.expertcourse.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import java.util.List;
 
 import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.model.Movie;
-
-import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
 
 /**
  * please check https://www.youtube.com/watch?v=wDBM6wVEO70 for best practices how to implement list view
@@ -86,7 +83,7 @@ public class MovieListStandardAdapter extends BaseAdapter {
 
         void bind(Movie movie) {
             Picasso.get().
-                    load("file:///android_asset/"+movie.getBanner()).
+                    load("file:///android_asset/" + movie.getBanner()).
                     config(Bitmap.Config.RGB_565).
                     fit().
                     into(logoIv);

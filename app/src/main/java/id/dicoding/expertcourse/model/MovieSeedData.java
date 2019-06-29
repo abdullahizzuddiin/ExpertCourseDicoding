@@ -22,7 +22,7 @@ public class MovieSeedData {
 
     private static List<Movie> extractMoviesFromJSONArray(JSONArray rawSeedData) throws JSONException {
         List<Movie> movies = new ArrayList<>();
-        for(int ii = 0; ii < rawSeedData.length(); ii++) {
+        for (int ii = 0; ii < rawSeedData.length(); ii++) {
             JSONObject rawMovie = rawSeedData.getJSONObject(ii);
             Movie movie = extractMovieFromJSONObject(rawMovie);
             movies.add(movie);

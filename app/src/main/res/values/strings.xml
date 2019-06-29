@@ -11,7 +11,7 @@
     <string name="budget_label">Budget</string>
     <string name="revenue_label">Revenue</string>
     <string name="runtime_label">Runtime</string>
-    <string name="original_language_label">Original Languange</string>
+    <string name="original_language_label">Original Language</string>
     <string name="revenue_example">$1,143,689,193.00</string>
     <string name="budget_example">$160,000,000.00</string>
     <string name="runtime_example">2h 24m</string>

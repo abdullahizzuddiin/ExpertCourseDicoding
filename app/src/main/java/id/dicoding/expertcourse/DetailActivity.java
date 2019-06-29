@@ -1,44 +1,46 @@
 package id.dicoding.expertcourse;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.squareup.picasso.Picasso;
 
 import id.dicoding.expertcourse.model.Movie;
+import id.dicoding.expertcourse.presenter.DetailPresenter;
+import id.dicoding.expertcourse.presenter_operation.DetailPresenterOperation;
+import id.dicoding.expertcourse.view_operation.DetailViewOperation;
 
-import static id.dicoding.expertcourse.model.MovieSeedData.getSeedData;
-import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
-
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailViewOperation {
     private ImageView bannerIv;
     private TextView titleTv, releaseYearTv, reviewScoreTv, overviewTv, originalLanguangeTv, runtimeTv, revenueTv, budgetTv;
     private RatingBar reviewScoreRb;
 
-    private Movie movie;
+    private DetailPresenterOperation presenter;
+
+    private final String TAG = "DETAIL_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        getExtras();
         setupView();
-        setupData();
+        setupPresenter();
+        presenter.start();
     }
 
-    private void getExtras() {
-        movie = getIntent().getParcelableExtra(getString(R.string.extra_data_movie));
+    private void setupPresenter() {
+        presenter = new DetailPresenter(this, this);
     }
 
     private void setupView() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        showBackButtonNavigation();
 
         bannerIv = findViewById(R.id.iv_banner_movie_detail);
         titleTv = findViewById(R.id.tv_movie_title_detail);
@@ -52,10 +54,19 @@ public class DetailActivity extends AppCompatActivity {
         reviewScoreRb = findViewById(R.id.rb_movie_review_score_detail);
     }
 
-    private void setupData() {
-        setToolbarTitle(movie.getTitle());
+    private void showBackButtonNavigation() {
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    @Override
+    public void showMovie(Movie movie) {
         Picasso.get().
-                load("file:///android_asset/"+movie.getBanner()).
+                load("file:///android_asset/" + movie.getBanner()).
                 config(Bitmap.Config.RGB_565).
                 fit().
                 into(bannerIv);
@@ -72,9 +83,11 @@ public class DetailActivity extends AppCompatActivity {
 
     /**
      * just for high readability purpose
+     *
      * @param title: self explanatory
      */
-    private void setToolbarTitle(String title) {
+    @Override
+    public void setToolbarTitle(String title) {
         setTitle(title);
     }
 
