@@ -72,8 +72,8 @@ public class DetailActivity extends AppCompatActivity implements DetailViewOpera
                 into(bannerIv);
         titleTv.setText(movie.getTitle());
         releaseYearTv.setText(movie.getReleasedYear());
-        reviewScoreTv.setText(getString(R.string.rate_text, String.valueOf(movie.getReviewScoreFiveMaxFormat())));
-        overviewTv.setText(movie.getOverview());
+        reviewScoreTv.setText(String.valueOf(movie.getReviewScoreTenMaxFormat()));
+        overviewTv.setText(movie.getOverviewEn());
         originalLanguangeTv.setText(movie.getOriginalLanguage());
         runtimeTv.setText(movie.getRuntime());
         revenueTv.setText(movie.getRevenue());

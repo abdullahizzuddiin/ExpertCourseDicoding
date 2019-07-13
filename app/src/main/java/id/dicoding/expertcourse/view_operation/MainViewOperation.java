@@ -6,4 +6,6 @@ import id.dicoding.expertcourse.model.Movie;
 
 public interface MainViewOperation {
     void setupAdapter(List<Movie> movieList);
+
+    void navigateToDetailView(Movie movie);
 }

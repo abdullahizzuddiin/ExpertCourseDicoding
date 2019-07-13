@@ -4,9 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
+import static id.dicoding.expertcourse.util.Format.parseToPerTenRate;
 
 public class Movie implements Parcelable {
-    private String title, banner, releasedYear, overview, revenue, budget, runtime, originalLanguage;
+    private String title, banner, releasedYear, overviewEn, overviewId, revenue, budget, runtime, originalLanguage;
     private int reviewScore;
 
     public Movie() {
@@ -17,7 +18,8 @@ public class Movie implements Parcelable {
         title = in.readString();
         banner = in.readString();
         releasedYear = in.readString();
-        overview = in.readString();
+        overviewEn = in.readString();
+        overviewId = in.readString();
         revenue = in.readString();
         budget = in.readString();
         runtime = in.readString();
@@ -46,7 +48,7 @@ public class Movie implements Parcelable {
     }
 
     public String getBanner() {
-        return banner;
+        return "movies/" + banner;
     }
 
     public void setBanner(String banner) {
@@ -61,24 +63,20 @@ public class Movie implements Parcelable {
         this.releasedYear = releasedYear;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getOverviewEn() {
+        return overviewEn;
     }
 
-    public int getReviewScore() {
-        return reviewScore;
+    public void setOverviewEn(String overviewEn) {
+        this.overviewEn = overviewEn;
     }
 
-    public float getReviewScoreFiveMaxFormat() {
-        return parseToPerFiveRate(getReviewScore());
+    public String getOverviewId() {
+        return overviewId;
     }
 
-    public void setReviewScore(int reviewScore) {
-        this.reviewScore = reviewScore;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setOverviewId(String overviewId) {
+        this.overviewId = overviewId;
     }
 
     public String getRevenue() {
@@ -113,6 +111,22 @@ public class Movie implements Parcelable {
         this.originalLanguage = originalLanguage;
     }
 
+    public int getReviewScore() {
+        return reviewScore;
+    }
+
+    public float getReviewScoreTenMaxFormat() {
+        return parseToPerTenRate(getReviewScore());
+    }
+
+    public float getReviewScoreFiveMaxFormat() {
+        return parseToPerFiveRate(getReviewScore());
+    }
+
+    public void setReviewScore(int reviewScore) {
+        this.reviewScore = reviewScore;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -123,7 +137,8 @@ public class Movie implements Parcelable {
         dest.writeString(title);
         dest.writeString(banner);
         dest.writeString(releasedYear);
-        dest.writeString(overview);
+        dest.writeString(overviewEn);
+        dest.writeString(overviewId);
         dest.writeString(revenue);
         dest.writeString(budget);
         dest.writeString(runtime);

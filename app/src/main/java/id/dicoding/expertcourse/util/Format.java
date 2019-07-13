@@ -7,4 +7,10 @@ public class Format {
 
         return score * maximumFiveRate / maximumRegularRate;
     }
+
+    public static float parseToPerTenRate(int score) {
+        float tenRateFormat = 10.0f;
+
+        return score / tenRateFormat;
+    }
 }

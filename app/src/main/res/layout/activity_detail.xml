@@ -58,11 +58,20 @@
             android:id="@+id/tv_movie_review_score_text_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="@+id/rb_movie_review_score_detail"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rb_movie_review_score_detail"
             tools:text="@string/movie_rate_text_example" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_review_score_text_detail"
+            app:layout_constraintStart_toEndOf="@+id/tv_movie_review_score_text_detail"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:text="@string/movie_rate_text_basis" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/top_barrier_detail"

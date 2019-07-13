@@ -1,23 +1,25 @@
 package id.dicoding.expertcourse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import id.dicoding.expertcourse.adapter.MovieListStandardAdapter;
+import id.dicoding.expertcourse.adapter.MovieListAdapter;
 import id.dicoding.expertcourse.model.Movie;
 import id.dicoding.expertcourse.presenter.MainPresenter;
 import id.dicoding.expertcourse.presenter_operation.MainPresenterOperation;
+import id.dicoding.expertcourse.util.ItemClickSupport;
 import id.dicoding.expertcourse.view_operation.MainViewOperation;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, MainViewOperation {
-    private ListView movieListLv;
-    private MovieListStandardAdapter standardAdapter;
+public class MainActivity extends AppCompatActivity implements MainViewOperation, ItemClickSupport.OnItemClickListener {
+    private RecyclerView movieListRv;
+    private MovieListAdapter standardAdapter;
     private MainPresenterOperation presenter;
 
     @Override
@@ -30,24 +32,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void setupPresenter() {
-        presenter = new MainPresenter(this, this);
+        presenter = new MainPresenter(this);
     }
 
 
     private void setupView() {
-        movieListLv = findViewById(R.id.lv_movie_list);
-        movieListLv.setOnItemClickListener(this);
+        movieListRv = findViewById(R.id.lv_movie_list);
+        ItemClickSupport.addTo(movieListRv).setOnItemClickListener(this);
     }
 
     @Override
     public void setupAdapter(List<Movie> movieList) {
-        standardAdapter = new MovieListStandardAdapter(this);
-        standardAdapter.setData(movieList);
-        movieListLv.setAdapter(standardAdapter);
+        standardAdapter = new MovieListAdapter(movieList);
+        movieListRv.setAdapter(standardAdapter);
+        movieListRv.setLayoutManager(new LinearLayoutManager(this));
+        movieListRv.setHasFixedSize(true);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        presenter.onItemClick(parent, view, position, id);
+    public void navigateToDetailView(Movie movie) {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra(getString(R.string.extra_data_movie), movie);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+        presenter.onItemClicked(position);
     }
 }
