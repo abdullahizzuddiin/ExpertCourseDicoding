@@ -6,6 +6,7 @@ Fitur yang harus ada:
 - Fitur di submission 1
 - TabLayout/Bottom Navigation Tab untuk membedakan Movie dan TvShow
 - Constraint Layout untuk Detail Movie/TvShow
+- Localization (mendukung bahasa Indonesia dan Inggris)
 - RecyclerView untuk daftar Movie/TvShow (di submission 1 menggunakan ListView)  
 
 Pada submissionini, saya coba menerapkan Model-View-Presenter pattern dan Repository Pattern.
