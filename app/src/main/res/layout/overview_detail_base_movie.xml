@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_overview_label"
+        android:text="@string/overview_label"
+        style="@style/SectionsStyle"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_banner_movie_detail"
+        app:layout_constraintStart_toStartOf="@+id/iv_banner_movie_detail"
+        app:layout_constraintTop_toTopOf="@+id/top_barrier_detail" />
+
+    <TextView
+        android:id="@+id/tv_movie_overview_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_overview_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_overview_label"
+        tools:text="@string/movie_overview_example" />
+</merge>

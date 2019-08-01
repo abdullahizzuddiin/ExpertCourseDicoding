@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Source: https://gist.github.com/nesquena/231e356f372f214c4fe6 -->
-<!-- Source: https://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/ -->
+<?xml version="1.0" encoding="utf-8"?><!-- Source: https://gist.github.com/nesquena/231e356f372f214c4fe6 --><!-- Source: https://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/ -->
 <resources>
     <item name="item_click_support" type="id" />
 </resources>

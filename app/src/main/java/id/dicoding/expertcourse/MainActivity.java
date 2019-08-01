@@ -2,62 +2,55 @@ package id.dicoding.expertcourse;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import java.util.List;
+import id.dicoding.expertcourse.ui.adapter.BaseMoviePagerAdapter;
+import id.dicoding.expertcourse.ui.movie_list.MovieListFragment;
+import id.dicoding.expertcourse.ui.tvshow_list.TvShowListFragment;
 
-import id.dicoding.expertcourse.adapter.MovieListAdapter;
-import id.dicoding.expertcourse.model.Movie;
-import id.dicoding.expertcourse.presenter.MainPresenter;
-import id.dicoding.expertcourse.presenter_operation.MainPresenterOperation;
-import id.dicoding.expertcourse.util.ItemClickSupport;
-import id.dicoding.expertcourse.view_operation.MainViewOperation;
-
-public class MainActivity extends AppCompatActivity implements MainViewOperation, ItemClickSupport.OnItemClickListener {
-    private RecyclerView movieListRv;
-    private MovieListAdapter standardAdapter;
-    private MainPresenterOperation presenter;
+public class MainActivity extends AppCompatActivity {
+    private ViewPager baseMovieViewPager;
+    private BaseMoviePagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupView();
-        setupPresenter();
-        presenter.setupData();
+        setupViewPager();
     }
 
-    private void setupPresenter() {
-        presenter = new MainPresenter(this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_change_language_settings) {
+            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(mIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupViewPager() {
+        pagerAdapter = new BaseMoviePagerAdapter(getSupportFragmentManager());
+
+        pagerAdapter.addContents(new MovieListFragment(), getString(R.string.movie_view_pager_label));
+        pagerAdapter.addContents(new TvShowListFragment(), getString(R.string.tv_show_view_pager_label));
+        baseMovieViewPager.setOffscreenPageLimit(2);
+        baseMovieViewPager.setAdapter(pagerAdapter);
+    }
 
     private void setupView() {
-        movieListRv = findViewById(R.id.lv_movie_list);
-        ItemClickSupport.addTo(movieListRv).setOnItemClickListener(this);
-    }
-
-    @Override
-    public void setupAdapter(List<Movie> movieList) {
-        standardAdapter = new MovieListAdapter(movieList);
-        movieListRv.setAdapter(standardAdapter);
-        movieListRv.setLayoutManager(new LinearLayoutManager(this));
-        movieListRv.setHasFixedSize(true);
-    }
-
-    @Override
-    public void navigateToDetailView(Movie movie) {
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra(getString(R.string.extra_data_movie), movie);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        presenter.onItemClicked(position);
+        baseMovieViewPager = findViewById(R.id.base_movie_viewpager);
     }
 }
