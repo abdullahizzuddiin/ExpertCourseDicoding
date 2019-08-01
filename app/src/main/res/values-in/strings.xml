@@ -1,37 +1,35 @@
 <resources>
-    <string name="app_name">Movie Catalogue</string>
-    <string name="movie_banner_content_description">Movie Banner</string>
-    <string name="overview_label">Overview</string>
-    <string name="fact_label">Some Facts!</string>
-    <string name="budget_label">Budget</string>
-    <string name="revenue_label">Revenue</string>
-    <string name="runtime_label">Runtime</string>
+    <string name="app_name">Katalog Film</string>
+    <string name="movie_banner_content_description">Poster Film</string>
+    <string name="overview_label">Sekilas</string>
+    <string name="fact_label">Fakta Seru!</string>
+    <string name="budget_label">Biaya</string>
+    <string name="revenue_label">Pendapatan</string>
+    <string name="runtime_label">Durasi</string>
     <string name="status_label">Status</string>
-    <string name="original_language_label">Original Language</string>
-    <string name="change_language_settings">Change Language Settings</string>
+    <string name="original_language_label">Bahasa Asli</string>
+    <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
 
-    <string name="movie_view_pager_label">Movies</string>
-    <string name="tv_show_view_pager_label">TV Shows</string>
+    <string name="movie_view_pager_label">Film</string>
+    <string name="tv_show_view_pager_label">Acara TV</string>
 
-    <string name="movie_rate_text_example">8.7</string>
-    <string name="movie_rate_text_basis">/10</string>
     <string name="movie_name_example">The Girl in the Spider\'s Webstorm ft PHPStorm</string>
-    <string name="release_year_example">2018</string>
     <string name="revenue_example">$1,143,689,193.00</string>
     <string name="budget_example">$160,000,000.00</string>
     <string name="runtime_example">2h 24m</string>
     <string name="original_language_example">English</string>
+    <string name="movie_rate_text_example">8.7</string>
+    <string name="movie_rate_text_basis">/10</string>
+    <string name="release_year_example">2018</string>
     <string name="movie_overview_example">In Stockholm, Sweden, hacker Lisbeth Salander is hired by Frans Balder, a computer engineer, to retrieve a program that he believes it is too dangerous to exist.</string>
-
+    <string name="no_movie_title">Tidak ada data.</string>
     <string name="extra_data_movie">extra_data_movie</string>
     <string name="extra_data_movie_title">extra_data_movie_title</string>
     <string name="extra_data_movie_type">extra_data_movie_type</string>
 
-    <string name="status_continued">Continue</string>
-    <string name="status_ended">Ended</string>
-    <string name="no_movie_title">No Movie Found</string>
+    <string name="status_continued">Masih Tayang</string>
+    <string name="status_ended">Tamat</string>
     <string name="dash">-</string>
-
     <string-array name="tv_show_status_text">
         <item>@string/status_continued</item>
         <item>@string/status_ended</item>
