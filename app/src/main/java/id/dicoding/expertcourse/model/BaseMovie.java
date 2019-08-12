@@ -11,8 +11,6 @@ import static id.dicoding.expertcourse.util.Format.parseToPerTenRate;
 public class BaseMovie implements Parcelable {
     private String title, banner, releasedYear, overviewEn, overviewId, runtime, originalLanguageEn, originalLanguageId;
     private int reviewScore;
-    private final String NO_OVERVIEW_ENGLISH_SUPPORTED = "No overview in english";
-    private final String NO_OVERVIEW_INDONESIAN_SUPPORTED = "Tidak ada ringkasan dalam bahasa Indonesia";
 
     public BaseMovie() {
     }
@@ -71,6 +69,7 @@ public class BaseMovie implements Parcelable {
     }
 
     public String getOverviewEn() {
+        String NO_OVERVIEW_ENGLISH_SUPPORTED = "No overview in english";
         return overviewEn.equals("null") ? NO_OVERVIEW_ENGLISH_SUPPORTED : overviewEn;
     }
 
@@ -79,6 +78,7 @@ public class BaseMovie implements Parcelable {
     }
 
     public String getOverviewId() {
+        String NO_OVERVIEW_INDONESIAN_SUPPORTED = "Tidak ada ringkasan dalam bahasa Indonesia";
         return overviewId.equals("null") ? NO_OVERVIEW_INDONESIAN_SUPPORTED : overviewId;
     }
 

@@ -2,7 +2,7 @@ package id.dicoding.expertcourse.repository.tvshow;
 
 import java.util.List;
 
-import id.dicoding.expertcourse.model.TvShow;
+import id.dicoding.expertcourse.model.BaseMovie;
 
 public class TvShowRepository implements TvShowDataSource {
     private TvShowDataSource inAppDataSource;
@@ -15,7 +15,7 @@ public class TvShowRepository implements TvShowDataSource {
     public void getTvShows(final LoadDataCallback callback) {
         inAppDataSource.getTvShows(new LoadDataCallback() {
             @Override
-            public void onDataLoaded(List<TvShow> tvShowList) {
+            public void onDataLoaded(List<BaseMovie> tvShowList) {
                 callback.onDataLoaded(tvShowList);
             }
         });

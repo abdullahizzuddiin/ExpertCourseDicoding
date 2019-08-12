@@ -1,4 +1,4 @@
-package id.dicoding.expertcourse.ui.movie_list;
+package id.dicoding.expertcourse.ui.base_movie_list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,21 +18,28 @@ import java.util.List;
 import id.dicoding.expertcourse.DetailActivity;
 import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.constant.MovieConst;
+import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.Movie;
+import id.dicoding.expertcourse.model.TvShow;
 import id.dicoding.expertcourse.repository.movie.MovieInAppDataSource;
 import id.dicoding.expertcourse.repository.movie.MovieRepository;
-import id.dicoding.expertcourse.ui.adapter.MovieListAdapter;
+import id.dicoding.expertcourse.repository.tvshow.TvShowInAppDataSource;
+import id.dicoding.expertcourse.repository.tvshow.TvShowRepository;
+import id.dicoding.expertcourse.ui.adapter.BaseMovieListAdapter;
 import id.dicoding.expertcourse.util.ItemClickSupport;
 
-public class MovieListFragment extends Fragment implements ItemClickSupport.OnItemClickListener, MovieListContract.View {
+public class BaseMovieListFragment extends Fragment implements ItemClickSupport.OnItemClickListener, BaseMovieListContract.View {
     private RecyclerView recyclerView;
-    private MovieListAdapter adapter;
-    private MovieListContract.Presenter presenter;
+    private BaseMovieListAdapter adapter;
+    private BaseMovieListContract.Presenter presenter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        new MovieListPresenter(this, new MovieRepository(new MovieInAppDataSource()));
+        new BaseMovieListPresenter(
+                this,
+                new MovieRepository(new MovieInAppDataSource()),
+                new TvShowRepository(new TvShowInAppDataSource()));
     }
 
     @Override
@@ -47,6 +54,16 @@ public class MovieListFragment extends Fragment implements ItemClickSupport.OnIt
     }
 
     @Override
+    public int getMovieType() {
+        Bundle extras = getArguments();
+        if(extras == null) {
+            return MovieConst.TYPE_MOVIES;
+        }
+
+        return extras.getInt(getString(R.string.extra_data_movie_type), MovieConst.TYPE_MOVIES);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -56,7 +73,7 @@ public class MovieListFragment extends Fragment implements ItemClickSupport.OnIt
     }
 
     @Override
-    public void setPresenter(MovieListContract.Presenter presenter) {
+    public void setPresenter(BaseMovieListContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -64,7 +81,7 @@ public class MovieListFragment extends Fragment implements ItemClickSupport.OnIt
         recyclerView = view.findViewById(R.id.rv_base_movie_list);
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(this);
 
-        adapter = new MovieListAdapter();
+        adapter = new BaseMovieListAdapter();
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -83,11 +100,20 @@ public class MovieListFragment extends Fragment implements ItemClickSupport.OnIt
         intent.putExtra(getString(R.string.extra_data_movie), movie);
         intent.putExtra(getString(R.string.extra_data_movie_title), movie.getTitle());
         startActivity(intent);
-   }
+    }
 
     @Override
-    public void showMovieList(List<Movie> movieList) {
+    public void navigateToDetailView(TvShow tvShow) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(getString(R.string.extra_data_movie_type), MovieConst.TYPE_TV_SHOWS);
+        intent.putExtra(getString(R.string.extra_data_movie), tvShow);
+        intent.putExtra(getString(R.string.extra_data_movie_title), tvShow.getTitle());
+        startActivity(intent);
+    }
+
+    @Override
+    public void showMovieList(List<BaseMovie> baseMovieList) {
         adapter.clearData();
-        adapter.setData(movieList);
+        adapter.setData(baseMovieList);
     }
 }

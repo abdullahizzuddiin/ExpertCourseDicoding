@@ -1,16 +1,22 @@
-package id.dicoding.expertcourse.ui.movie_list;
+package id.dicoding.expertcourse.ui.base_movie_list;
 
 import java.util.List;
 
 import id.dicoding.expertcourse.BasePresenter;
 import id.dicoding.expertcourse.BaseView;
+import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.Movie;
+import id.dicoding.expertcourse.model.TvShow;
 
-public class MovieListContract {
+public class BaseMovieListContract {
     interface View extends BaseView<Presenter> {
         void navigateToDetailView(Movie movie);
 
-        void showMovieList(List<Movie> movieList);
+        void navigateToDetailView(TvShow tvShow);
+
+        void showMovieList(List<BaseMovie> baseMovieList);
+
+        int getMovieType();
     }
 
     interface Presenter extends BasePresenter {

@@ -7,11 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import id.dicoding.expertcourse.constant.MovieConst;
 import id.dicoding.expertcourse.ui.adapter.BaseMoviePagerAdapter;
-import id.dicoding.expertcourse.ui.movie_list.MovieListFragment;
-import id.dicoding.expertcourse.ui.tvshow_list.TvShowListFragment;
+import id.dicoding.expertcourse.ui.base_movie_list.BaseMovieListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager baseMovieViewPager;
@@ -44,10 +45,28 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager() {
         pagerAdapter = new BaseMoviePagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addContents(new MovieListFragment(), getString(R.string.movie_view_pager_label));
-        pagerAdapter.addContents(new TvShowListFragment(), getString(R.string.tv_show_view_pager_label));
+        pagerAdapter.addContents(getMovieTypeFragment(), getString(R.string.movie_view_pager_label));
+        pagerAdapter.addContents(getTvShowTypeFragment(), getString(R.string.tv_show_view_pager_label));
         baseMovieViewPager.setOffscreenPageLimit(2);
         baseMovieViewPager.setAdapter(pagerAdapter);
+    }
+
+    private Fragment getMovieTypeFragment() {
+        Bundle extras = new Bundle();
+        extras.putInt(getString(R.string.extra_data_movie_type), MovieConst.TYPE_MOVIES);
+
+        BaseMovieListFragment fragment = new BaseMovieListFragment();
+        fragment.setArguments(extras);
+        return fragment;
+    }
+
+    private Fragment getTvShowTypeFragment() {
+        Bundle extras = new Bundle();
+        extras.putInt(getString(R.string.extra_data_movie_type), MovieConst.TYPE_TV_SHOWS);
+
+        BaseMovieListFragment fragment = new BaseMovieListFragment();
+        fragment.setArguments(extras);
+        return fragment;
     }
 
     private void setupView() {

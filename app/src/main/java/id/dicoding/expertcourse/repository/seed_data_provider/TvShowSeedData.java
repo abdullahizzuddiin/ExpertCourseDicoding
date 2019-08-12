@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.TvShow;
 
 public class TvShowSeedData {
@@ -47,5 +48,26 @@ public class TvShowSeedData {
         tvShow.setOriginalLanguageId(rawTvShow.getString("original_language_id"));
 
         return tvShow;
+    }
+
+    public static List<BaseMovie> getSeedData2() {
+        try {
+            JSONArray rawSeedData = new JSONArray(seedData);
+            return extractTvShowsFromJSONArrayToBaseMovieList(rawSeedData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    private static List<BaseMovie> extractTvShowsFromJSONArrayToBaseMovieList(JSONArray rawSeedData) throws JSONException {
+        List<BaseMovie> tvShows = new ArrayList<>();
+        for (int ii = 0; ii < rawSeedData.length(); ii++) {
+            JSONObject rawTvShow = rawSeedData.getJSONObject(ii);
+            BaseMovie tvShow = extractTvShowFromJSONObject(rawTvShow);
+            tvShows.add(tvShow);
+        }
+
+        return tvShows;
     }
 }
