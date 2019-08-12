@@ -8,7 +8,7 @@ import id.dicoding.expertcourse.repository.seed_data_provider.TvShowSeedData;
 public class TvShowInAppDataSource implements TvShowDataSource {
     @Override
     public void getTvShows(LoadDataCallback callback) {
-        List<BaseMovie> tvShowList = TvShowSeedData.getSeedData2();
+        List<BaseMovie> tvShowList = TvShowSeedData.getSeedData();
         callback.onDataLoaded(tvShowList);
     }
 }
