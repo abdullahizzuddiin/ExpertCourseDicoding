@@ -42,12 +42,18 @@
         app:layout_constraintStart_toStartOf="@+id/tv_revenue_detail_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_revenue_detail_label" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/fact_section_barrier_detail"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_budget_detail"
+        android:layout_width="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_height="wrap_content"
-        app:barrierDirection="right"
-        app:constraint_referenced_ids="tv_revenue_detail_label, tv_budget_detail_label, tv_runtime_detail_label, tv_original_language_detail_label" />
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:layout_constraintLeft_toRightOf="@id/fact_section_barrier_detail"
+        app:layout_constraintStart_toEndOf="@id/fact_section_barrier_detail"
+        app:layout_constraintTop_toTopOf="@id/tv_budget_detail_label"
+        tools:text="@string/budget_example" />
 
     <TextView
         android:id="@+id/tv_original_language_detail"
@@ -82,14 +88,12 @@
         app:layout_constraintTop_toTopOf="@id/tv_revenue_detail_label"
         tools:text="@string/revenue_example" />
 
-    <TextView
-        android:id="@+id/tv_budget_detail"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fact_section_barrier_detail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@id/fact_section_barrier_detail"
-        app:layout_constraintStart_toEndOf="@id/fact_section_barrier_detail"
-        app:layout_constraintTop_toTopOf="@id/tv_budget_detail_label"
-        tools:text="@string/budget_example" />
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="tv_revenue_detail_label,tv_budget_detail_label,tv_runtime_detail_label,tv_original_language_detail_label"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="16dp" />
 </merge>

@@ -20,20 +20,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_fact_detail_label" />
 
     <TextView
-        android:id="@+id/tv_runtime_detail_label"
-        style="@style/FactsLabelStyle"
-        android:text="@string/runtime_label"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_original_language_detail_label"
-        app:layout_constraintStart_toStartOf="@+id/tv_original_language_detail_label"
-        app:layout_constraintTop_toBottomOf="@+id/tv_original_language_detail_label" />
-
-    <TextView
         android:id="@+id/tv_status_detail_label"
         style="@style/FactsLabelStyle"
         android:text="@string/status_label"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_runtime_detail_label"
-        app:layout_constraintStart_toStartOf="@+id/tv_runtime_detail_label"
-        app:layout_constraintTop_toBottomOf="@+id/tv_runtime_detail_label" />
+        app:layout_constraintLeft_toLeftOf="@+id/tv_original_language_detail_label"
+        app:layout_constraintStart_toStartOf="@+id/tv_original_language_detail_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_original_language_detail_label" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/fact_section_barrier_detail"
@@ -52,17 +44,6 @@
         app:layout_constraintStart_toEndOf="@id/fact_section_barrier_detail"
         app:layout_constraintTop_toTopOf="@id/tv_original_language_detail_label"
         tools:text="@string/original_language_example" />
-
-    <TextView
-        android:id="@+id/tv_runtime_detail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toRightOf="@id/fact_section_barrier_detail"
-        app:layout_constraintStart_toEndOf="@id/fact_section_barrier_detail"
-        app:layout_constraintTop_toTopOf="@id/tv_runtime_detail_label"
-        tools:text="@string/runtime_example" />
 
     <TextView
         android:id="@+id/tv_status_detail"

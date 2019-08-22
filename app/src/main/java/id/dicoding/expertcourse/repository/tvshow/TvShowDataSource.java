@@ -3,11 +3,22 @@ package id.dicoding.expertcourse.repository.tvshow;
 import java.util.List;
 
 import id.dicoding.expertcourse.model.BaseMovie;
+import id.dicoding.expertcourse.model.TvShow;
 
 public interface TvShowDataSource {
-    void getTvShows(LoadDataCallback callback);
+    void getTvShows(GetTvShowsLoadDataCallback callback);
 
-    interface LoadDataCallback {
+    void getDetailTvShow(int tvShowId, GetDetailDataCallback callback);
+
+    interface GetTvShowsLoadDataCallback {
         void onDataLoaded(List<BaseMovie> tvShowList);
+
+        void onFailure();
+    }
+
+    interface GetDetailDataCallback {
+        void onDataLoaded(TvShow tvShow);
+
+        void onFailure();
     }
 }

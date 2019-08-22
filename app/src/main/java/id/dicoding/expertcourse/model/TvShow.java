@@ -3,8 +3,11 @@ package id.dicoding.expertcourse.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 public class TvShow extends BaseMovie implements Parcelable {
-    private int status;
+    @Expose
+    private String status;
 
     public TvShow() {
         super();
@@ -12,13 +15,13 @@ public class TvShow extends BaseMovie implements Parcelable {
 
     protected TvShow(Parcel in) {
         super(in);
-        status = in.readInt();
+        status = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(status);
+        dest.writeString(status);
     }
 
     @Override
@@ -38,15 +41,11 @@ public class TvShow extends BaseMovie implements Parcelable {
         }
     };
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getBanner() {
-        return "tv_shows/" + super.getBanner();
     }
 }

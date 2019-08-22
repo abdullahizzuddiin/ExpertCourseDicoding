@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment getMovieTypeFragment() {
         Bundle extras = new Bundle();
-        extras.putInt(getString(R.string.extra_data_movie_type), MovieConst.TYPE_MOVIES);
+        extras.putInt(getString(R.string.extra_data_base_movie_type), MovieConst.TYPE_MOVIES);
 
         BaseMovieListFragment fragment = new BaseMovieListFragment();
         fragment.setArguments(extras);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment getTvShowTypeFragment() {
         Bundle extras = new Bundle();
-        extras.putInt(getString(R.string.extra_data_movie_type), MovieConst.TYPE_TV_SHOWS);
+        extras.putInt(getString(R.string.extra_data_base_movie_type), MovieConst.TYPE_TV_SHOWS);
 
         BaseMovieListFragment fragment = new BaseMovieListFragment();
         fragment.setArguments(extras);
