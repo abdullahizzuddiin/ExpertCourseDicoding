@@ -3,8 +3,17 @@ package id.dicoding.expertcourse.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 public class Movie extends BaseMovie implements Parcelable {
-    private String revenue, budget;
+    @Expose
+    private int runtime;
+
+    @Expose
+    private int revenue;
+
+    @Expose
+    private int budget;
 
     public Movie() {
         super();
@@ -12,8 +21,22 @@ public class Movie extends BaseMovie implements Parcelable {
 
     protected Movie(Parcel in) {
         super(in);
-        revenue = in.readString();
-        budget = in.readString();
+        runtime = in.readInt();
+        revenue = in.readInt();
+        budget = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(runtime);
+        dest.writeInt(revenue);
+        dest.writeInt(budget);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -28,35 +51,27 @@ public class Movie extends BaseMovie implements Parcelable {
         }
     };
 
-    public String getRevenue() {
+    public int getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public int getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(String revenue) {
+    public void setRevenue(int revenue) {
         this.revenue = revenue;
     }
 
-    public String getBudget() {
+    public int getBudget() {
         return budget;
     }
 
-    public void setBudget(String budget) {
+    public void setBudget(int budget) {
         this.budget = budget;
-    }
-
-    public String getBanner() {
-        return "movies/" + super.getBanner();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(revenue);
-        dest.writeString(budget);
     }
 }

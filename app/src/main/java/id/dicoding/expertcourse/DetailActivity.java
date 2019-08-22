@@ -10,17 +10,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import id.dicoding.expertcourse.constant.MovieConst;
-import id.dicoding.expertcourse.model.Movie;
-import id.dicoding.expertcourse.model.TvShow;
-import id.dicoding.expertcourse.ui.detail_movie.MovieDetailFragment;
-import id.dicoding.expertcourse.ui.detail_tvshow.TvShowDetailFragment;
+import id.dicoding.expertcourse.ui.detail_fragment.MovieDetailFragment;
+import id.dicoding.expertcourse.ui.detail_fragment.TvShowDetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
     private final String TAG = DetailActivity.class.getName();
     private int movieType;
-    private Movie movie;
-    private TvShow tvShow;
+    private final String FRAGMENT_TAG = "detailFragment";
     private String title;
+    private int baseMovieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,32 +26,30 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         getExtras();
         setupView();
+        installFragment(savedInstanceState);
     }
 
     private void getExtras() {
-        movieType = getIntent().getIntExtra(getString(R.string.extra_data_movie_type), MovieConst.TYPE_MOVIES);
-        title = getIntent().getStringExtra(getString(R.string.extra_data_movie_title));
-        if (movieType == MovieConst.TYPE_MOVIES) {
-            movie = getIntent().getParcelableExtra(getString(R.string.extra_data_movie));
-        } else {
-            tvShow = getIntent().getParcelableExtra(getString(R.string.extra_data_movie));
-        }
+        movieType = getIntent().getIntExtra(getString(R.string.extra_data_base_movie_type), MovieConst.TYPE_MOVIES);
+        title = getIntent().getStringExtra(getString(R.string.extra_data_base_movie_title));
+        baseMovieId = getIntent().getIntExtra(getString(R.string.extra_data_base_movie_id), 0);
     }
 
     private void setupView() {
         showBackButtonNavigation();
         setToolbarTitle(title);
-        installFragment();
     }
 
-    private void installFragment() {
-        Fragment fragment = getFragmentByMovieType();
+    private void installFragment(Bundle savedInstanceState) {
+        if(savedInstanceState == null) {
+            Fragment detailFragment = getFragmentByMovieType();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.detail_frame_container, fragment);
-        fragmentTransaction.commit();
+            fragmentTransaction.replace(R.id.detail_frame_container, detailFragment, FRAGMENT_TAG);
+            fragmentTransaction.commit();
+        }
     }
 
     private Fragment getFragmentByMovieType() {
@@ -66,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private Fragment getMovieDetailFragment() {
         Bundle extras = new Bundle();
-        extras.putParcelable(getString(R.string.extra_data_movie), movie);
+        extras.putInt(getString(R.string.extra_data_base_movie_id), baseMovieId);
 
         MovieDetailFragment fragment = new MovieDetailFragment();
         fragment.setArguments(extras);
@@ -75,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private Fragment getTvShowDetailFragment() {
         Bundle extras = new Bundle();
-        extras.putParcelable(getString(R.string.extra_data_movie), tvShow);
+        extras.putInt(getString(R.string.extra_data_base_movie_id), baseMovieId);
 
         TvShowDetailFragment fragment = new TvShowDetailFragment();
         fragment.setArguments(extras);

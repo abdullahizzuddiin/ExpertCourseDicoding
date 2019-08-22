@@ -3,28 +3,75 @@ package id.dicoding.expertcourse.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import static id.dicoding.expertcourse.util.Format.parseToPerFiveRate;
-import static id.dicoding.expertcourse.util.Format.parseToPerTenRate;
+import static id.dicoding.expertcourse.request.ApiUtil.BASE_BIG_IMAGE_URL;
+import static id.dicoding.expertcourse.request.ApiUtil.BASE_MEDIUM_IMAGE_URL;
 
 public class BaseMovie implements Parcelable {
-    private String title, banner, releasedYear, overviewEn, overviewId, runtime, originalLanguageEn, originalLanguageId;
-    private int reviewScore;
+    @Expose
+    private int id;
+
+    @SerializedName(value = "original_title", alternate = {"original_name"})
+    @Expose
+    private String originalTitle;
+
+    @Expose
+    private double popularity;
+
+    @SerializedName("vote_average")
+    @Expose
+    private double voteAverage;
+
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
+
+    @SerializedName("backdrop_path")
+    @Expose
+    private String bannerPath;
+
+    @Expose
+    private String overview;
+
+    @SerializedName("vote_count")
+    @Expose
+    private int voteCount;
+
+    @SerializedName("original_language")
+    @Expose
+    private String originalLanguage;
+
+    @SerializedName("genres")
+    @Expose
+    private List<Genre> genreList;
+
+    @SerializedName(value =  "release_date", alternate = {"first_air_date"})
+    @Expose
+    private String releaseDate;
 
     public BaseMovie() {
     }
 
     protected BaseMovie(Parcel in) {
-        title = in.readString();
-        banner = in.readString();
-        releasedYear = in.readString();
-        overviewEn = in.readString();
-        overviewId = in.readString();
-        runtime = in.readString();
-        originalLanguageEn = in.readString();
-        originalLanguageId = in.readString();
-        reviewScore = in.readInt();
+        id = in.readInt();
+        originalTitle = in.readString();
+        popularity = in.readDouble();
+        voteAverage = in.readDouble();
+        posterPath = in.readString();
+        bannerPath = in.readString();
+        overview = in.readString();
+        voteCount = in.readInt();
+        originalLanguage = in.readString();
+        releaseDate = in.readString();
+        genreList = in.createTypedArrayList(Genre.CREATOR);
     }
 
     public static final Creator<BaseMovie> CREATOR = new Creator<BaseMovie>() {
@@ -39,96 +86,128 @@ public class BaseMovie implements Parcelable {
         }
     };
 
-    public String getTitle() {
-        return title;
+    public int getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getBanner() {
-        return banner;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
-    public void setBanner(String banner) {
-        this.banner = banner;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
-    public String getReleasedYear() {
-        return releasedYear;
+    public double getPopularity() {
+        return popularity;
     }
 
-    public void setReleasedYear(String releasedYear) {
-        this.releasedYear = releasedYear;
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getPosterUrl() {
+        return BASE_MEDIUM_IMAGE_URL + getPosterPath();
+    }
+
+    public String getBannerPath() {
+        return bannerPath;
+    }
+
+    public void setBannerPath(String bannerPath) {
+        this.bannerPath = bannerPath;
+    }
+
+    public String getBannerUrl() {
+        return BASE_BIG_IMAGE_URL + getBannerPath();
     }
 
     public String getOverview() {
-        boolean isEnglish = Locale.getDefault().getLanguage().equals(new Locale("en").getLanguage());
-        return isEnglish ? getOverviewEn() : getOverviewId();
+        return overview;
     }
 
-    public String getOverviewEn() {
-        String NO_OVERVIEW_ENGLISH_SUPPORTED = "No overview in english";
-        return overviewEn.equals("null") ? NO_OVERVIEW_ENGLISH_SUPPORTED : overviewEn;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public void setOverviewEn(String overviewEn) {
-        this.overviewEn = overviewEn;
+    public int getVoteCount() {
+        return voteCount;
     }
 
-    public String getOverviewId() {
-        String NO_OVERVIEW_INDONESIAN_SUPPORTED = "Tidak ada ringkasan dalam bahasa Indonesia";
-        return overviewId.equals("null") ? NO_OVERVIEW_INDONESIAN_SUPPORTED : overviewId;
-    }
-
-    public void setOverviewId(String overviewId) {
-        this.overviewId = overviewId;
-    }
-
-    public String getRuntime() {
-        return runtime;
-    }
-
-    public void setRuntime(String runtime) {
-        this.runtime = runtime;
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 
     public String getOriginalLanguage() {
-        boolean isEnglish = Locale.getDefault().getLanguage().equals(new Locale("en").getLanguage());
-        return isEnglish ? getOriginalLanguageEn() : getOriginalLanguageId();
+        return originalLanguage;
     }
 
-    public String getOriginalLanguageEn() {
-        return originalLanguageEn;
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
     }
 
-    public void setOriginalLanguageEn(String originalLanguageEn) {
-        this.originalLanguageEn = originalLanguageEn;
+    public String getDisplayLanguage() {
+        return new Locale(originalLanguage).getDisplayLanguage();
     }
 
-    public String getOriginalLanguageId() {
-        return originalLanguageId;
+    public List<Genre> getGenreList() {
+        return genreList;
     }
 
-    public void setOriginalLanguageId(String originalLanguageId) {
-        this.originalLanguageId = originalLanguageId;
+    public void setGenreList(List<Genre> genreList) {
+        this.genreList = genreList;
     }
 
-    public int getReviewScore() {
-        return reviewScore;
+    public String getGenreListInText() {
+        StringBuilder genreText = new StringBuilder();
+        for (int ii = 0; ii < genreList.size(); ii++) {
+            Genre genre = genreList.get(ii);
+            genreText.append(genre.getName());
+
+            boolean lastIndex = ii == genreList.size() - 1;
+            if(!lastIndex) genreText.append(", ");
+        }
+
+        return genreText.toString();
     }
 
-    public void setReviewScore(int reviewScore) {
-        this.reviewScore = reviewScore;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public float getReviewScoreTenMaxFormat() {
-        return parseToPerTenRate(getReviewScore());
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public float getReviewScoreFiveMaxFormat() {
-        return parseToPerFiveRate(getReviewScore());
+    public String getReleaseYear() {
+        try {
+            SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat newFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+            Date date = oldFormat.parse(releaseDate);
+            return newFormat.format(date);
+        } catch (ParseException exception) {
+            return "1990";
+        }
     }
 
     @Override
@@ -138,14 +217,16 @@ public class BaseMovie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(banner);
-        dest.writeString(releasedYear);
-        dest.writeString(overviewEn);
-        dest.writeString(overviewId);
-        dest.writeString(runtime);
-        dest.writeString(originalLanguageEn);
-        dest.writeString(originalLanguageId);
-        dest.writeInt(reviewScore);
+        dest.writeInt(id);
+        dest.writeString(originalTitle);
+        dest.writeDouble(popularity);
+        dest.writeDouble(voteAverage);
+        dest.writeString(posterPath);
+        dest.writeString(bannerPath);
+        dest.writeString(overview);
+        dest.writeInt(voteCount);
+        dest.writeString(originalLanguage);
+        dest.writeTypedList(genreList);
+        dest.writeString(releaseDate);
     }
 }
