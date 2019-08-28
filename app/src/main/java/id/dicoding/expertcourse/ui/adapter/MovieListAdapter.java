@@ -20,7 +20,7 @@ import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.model.BaseMovie;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
-    private List<BaseMovie> movieList = new ArrayList<>();
+    private final List<BaseMovie> movieList = new ArrayList<>();
 
     public void setData(List<BaseMovie> baseMovieList) {
         this.movieList.addAll(baseMovieList);
@@ -46,7 +46,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(movieList.get(position));
+        BaseMovie baseMovie = movieList.get(position);
+        String overview = baseMovie.getOverview().isEmpty() ?
+                holder.itemView.getContext().getResources().getString(R.string.no_overview_text) :
+                baseMovie.getOverview();
+        holder.bind(baseMovie, overview);
     }
 
     @Override
@@ -55,8 +59,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView logoIv;
-        private TextView titleTv, releaseYearTv, reviewScoreTv, overviewTv;
+        private final ImageView logoIv;
+        private final TextView titleTv;
+        private final TextView releaseYearTv;
+        private final TextView reviewScoreTv;
+        private final TextView overviewTv;
 
         ViewHolder(View view) {
             super(view);
@@ -67,7 +74,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             overviewTv = view.findViewById(R.id.tv_movie_overview_row);
         }
 
-        void bind(BaseMovie movie) {
+        void bind(BaseMovie movie, String overview) {
             Picasso.get().
                     load(movie.getPosterUrl()).
                     config(Bitmap.Config.RGB_565).
@@ -77,7 +84,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             titleTv.setText(movie.getOriginalTitle());
             releaseYearTv.setText(movie.getReleaseYear());
             reviewScoreTv.setText(String.valueOf(movie.getVoteAverage()));
-            overviewTv.setText(movie.getOverview());
+            overviewTv.setText(overview);
         }
     }
 }

@@ -6,9 +6,9 @@ import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.TvShow;
 
 public interface TvShowDataSource {
-    void getTvShows(GetTvShowsLoadDataCallback callback);
+    void getTvShows(String lang, GetTvShowsLoadDataCallback callback);
 
-    void getDetailTvShow(int tvShowId, GetDetailDataCallback callback);
+    void getDetailTvShow(int tvShowId, String lang, GetDetailDataCallback callback);
 
     interface GetTvShowsLoadDataCallback {
         void onDataLoaded(List<BaseMovie> tvShowList);

@@ -6,9 +6,9 @@ import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.Movie;
 
 public interface MovieDataSource {
-    void getMovies(GetMoviesDataCallback callback);
+    void getMovies(String lang, GetMoviesDataCallback callback);
 
-    void getDetailMovie(int movieId, GetDetailDataCallback callback);
+    void getDetailMovie(int movieId, String lang, GetDetailDataCallback callback);
 
     interface GetMoviesDataCallback {
         void onDataLoaded(List<BaseMovie> movieList);

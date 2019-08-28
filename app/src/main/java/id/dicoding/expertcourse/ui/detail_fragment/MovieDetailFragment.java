@@ -20,6 +20,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.model.Movie;
 import id.dicoding.expertcourse.viewmodel.DetailMovieViewModel;
@@ -42,19 +44,19 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
     private ConstraintLayout containerCl;
     private DetailMovieViewModel viewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Observer<Movie> onMovieLoaded = new Observer<Movie>() {
+    private final Observer<Movie> onMovieLoaded = new Observer<Movie>() {
         @Override
         public void onChanged(Movie loadedMovie) {
             showMovie(loadedMovie);
         }
     };
-    private Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isLoading) {
             showLoadingIndicator(isLoading);
         }
     };
-    private Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isFailed) {
             if(isFailed) {
@@ -90,16 +92,18 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
 
     private void subscribeObserver() {
         viewModel = ViewModelProviders.of(this).get(DetailMovieViewModel.class);
-        viewModel.getLoadedMovie().observe(this, onMovieLoaded);
-        viewModel.isLoading().observe(this, onLoadingStatusChanged);
-        viewModel.isFailure().observe(this, onFailureStatusChanged);
+        viewModel.getLoadedMovie().observe(getViewLifecycleOwner(), onMovieLoaded);
+        viewModel.isLoading().observe(getViewLifecycleOwner(), onLoadingStatusChanged);
+        viewModel.isFailure().observe(getViewLifecycleOwner(), onFailureStatusChanged);
     }
 
     private void initialStart() {
-        if(viewModel.hasInitiate()) {
+        Locale currentLocale = Locale.getDefault();
+        if(viewModel.hasInitiate() && !viewModel.isLangChanged(currentLocale)) {
             return;
         }
 
+        viewModel.setLang(currentLocale.getLanguage());
         viewModel.setMovieId(getMovieIdExtras());
         viewModel.loadMovie();
     }
@@ -168,10 +172,11 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
         titleTv.setText(movie.getOriginalTitle());
         releaseYearTv.setText(getString(R.string.text_with_bracket, movie.getReleaseYear()));
         reviewScoreTv.setText(String.valueOf(movie.getVoteAverage()));
-        voteCountTv.setText(getString(R.string.vote_count_text, movie.getVoteCount()));
-        overviewTv.setText(movie.getOverview());
+        voteCountTv.setText(getResources().getQuantityString(R.plurals.vote_count_text, movie.getVoteCount(), movie.getVoteCount()));
+        String overview = movie.getOverview().isEmpty() ? getString(R.string.no_overview_text) : movie.getOverview();
+        overviewTv.setText(overview);
         originalLanguageTv.setText(movie.getDisplayLanguage());
-        runtimeTv.setText(getString(R.string.runtime_format, movie.getRuntime()));
+        runtimeTv.setText(getResources().getQuantityString(R.plurals.runtime_format, movie.getRuntime(),movie.getRuntime()));
         revenueTv.setText(toDollar(movie.getRevenue()));
         budgetTv.setText(toDollar(movie.getBudget()));
         genresTv.setText(movie.getGenreListInText());

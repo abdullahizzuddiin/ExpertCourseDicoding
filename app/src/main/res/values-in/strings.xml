@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Katalog Film</string>
     <string name="movie_banner_content_description">Poster Film</string>
-    <string name="overview_label">Sekilas</string>
     <string name="fact_label">Fakta Seru!</string>
     <string name="budget_label">Biaya</string>
     <string name="revenue_label">Pendapatan</string>
@@ -9,13 +8,18 @@
     <string name="status_label">Status</string>
     <string name="original_language_label">Bahasa Asli</string>
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
+    <plurals name="runtime_format">
+        <item quantity="other">%d menit</item>
+    </plurals>
 
     <string name="movie_view_pager_label">Film</string>
     <string name="tv_show_view_pager_label">Acara TV</string>
 
     <string name="no_movie_title">Tidak ada data.</string>
-    <string name="vote_count_text">(%1$d menilai)</string>
-    <string name="runtime_format">%1$d menit</string>
+    <plurals name="vote_count_text">
+        <item quantity="other">(%d menilai)</item>
+    </plurals>
+    <string name="no_overview_text">Tidak ada sinopsis cerita</string>
     <string name="failure_get_base_movie_message">Wadidow, Saya gagal dapetin film-nya. Tarik ke bawah buat nyoba lagi\n(Server dalam masalah)</string>
     <string name="status_continued">Masih Tayang</string>
     <string name="dash">-</string>

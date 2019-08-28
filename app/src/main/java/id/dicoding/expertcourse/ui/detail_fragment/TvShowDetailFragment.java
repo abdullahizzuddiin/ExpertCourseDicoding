@@ -19,6 +19,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.model.TvShow;
 import id.dicoding.expertcourse.viewmodel.DetailTvShowViewModel;
@@ -37,19 +39,19 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
     private ConstraintLayout containerCl;
     private DetailTvShowViewModel viewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Observer<TvShow> onTvShowLoaded = new Observer<TvShow>() {
+    private final Observer<TvShow> onTvShowLoaded = new Observer<TvShow>() {
         @Override
         public void onChanged(TvShow loadedTvShow) {
             showTvShow(loadedTvShow);
         }
     };
-    private Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isLoading) {
             showLoadingIndicator(isLoading);
         }
     };
-    private Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isFailed) {
             if(isFailed) {
@@ -80,16 +82,18 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
 
     private void subscribeObserver() {
         viewModel = ViewModelProviders.of(this).get(DetailTvShowViewModel.class);
-        viewModel.getLoadedTvShow().observe(this, onTvShowLoaded);
-        viewModel.isLoading().observe(this, onLoadingStatusChanged);
-        viewModel.isFailure().observe(this, onFailureStatusChanged);
+        viewModel.getLoadedTvShow().observe(getViewLifecycleOwner(), onTvShowLoaded);
+        viewModel.isLoading().observe(getViewLifecycleOwner(), onLoadingStatusChanged);
+        viewModel.isFailure().observe(getViewLifecycleOwner(), onFailureStatusChanged);
     }
 
     private void initialStart() {
-        if(viewModel.hasInitiate()) {
+        Locale currentLocale = Locale.getDefault();
+        if(viewModel.hasInitiate() && !viewModel.isLangChanged(currentLocale)) {
             return;
         }
 
+        viewModel.setLang(currentLocale.getLanguage());
         viewModel.setTvShowId(getTvShowIdExtras());
         viewModel.loadTvShow();
     }
@@ -132,8 +136,9 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
         titleTv.setText(tvShow.getOriginalTitle());
         releaseYearTv.setText(tvShow.getReleaseYear());
         reviewScoreTv.setText(String.valueOf(tvShow.getVoteAverage()));
-        voteCountTv.setText(getString(R.string.vote_count_text, tvShow.getVoteCount()));
-        overviewTv.setText(tvShow.getOverview());
+        voteCountTv.setText(getResources().getQuantityString(R.plurals.vote_count_text, tvShow.getVoteCount(), tvShow.getVoteCount()));
+        String overview = tvShow.getOverview().isEmpty() ? getString(R.string.no_overview_text) : tvShow.getOverview();
+        overviewTv.setText(overview);
         originalLanguageTv.setText(tvShow.getDisplayLanguage());
         statusTv.setText(tvShow.getStatus());
         genresTv.setText(tvShow.getGenreListInText());

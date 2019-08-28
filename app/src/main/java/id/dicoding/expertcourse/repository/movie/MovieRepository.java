@@ -6,15 +6,15 @@ import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.Movie;
 
 public class MovieRepository implements MovieDataSource {
-    private MovieDataSource movieDataSource;
+    private final MovieDataSource movieDataSource;
 
     public MovieRepository(MovieDataSource dataSource) {
         this.movieDataSource = dataSource;
     }
 
     @Override
-    public void getMovies(final GetMoviesDataCallback callback) {
-        movieDataSource.getMovies(new GetMoviesDataCallback() {
+    public void getMovies(String lang, final GetMoviesDataCallback callback) {
+        movieDataSource.getMovies(lang, new GetMoviesDataCallback() {
             @Override
             public void onDataLoaded(List<BaseMovie> movieList) {
                 callback.onDataLoaded(movieList);
@@ -28,8 +28,8 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void getDetailMovie(int movieId, final GetDetailDataCallback callback) {
-        movieDataSource.getDetailMovie(movieId, new GetDetailDataCallback() {
+    public void getDetailMovie(int movieId, String lang, final GetDetailDataCallback callback) {
+        movieDataSource.getDetailMovie(movieId, lang, new GetDetailDataCallback() {
             @Override
             public void onDataLoaded(Movie movie) {
                 callback.onDataLoaded(movie);

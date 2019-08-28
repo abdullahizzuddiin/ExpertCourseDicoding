@@ -2,8 +2,6 @@ package id.dicoding.expertcourse.repository.movie;
 
 import androidx.annotation.NonNull;
 
-import java.util.Locale;
-
 import id.dicoding.expertcourse.BuildConfig;
 import id.dicoding.expertcourse.model.Movie;
 import id.dicoding.expertcourse.request.ApiUtil;
@@ -16,15 +14,13 @@ import retrofit2.Response;
 public class MovieOnlineDBDataSource implements MovieDataSource {
     private final MovieDBApi movieDbApi;
     private final String API_KEY = BuildConfig.API_KEY;
-    private String lang;
 
     public MovieOnlineDBDataSource() {
         movieDbApi = ApiUtil.getMovieDBService();
-        lang = Locale.getDefault().getLanguage();
     }
 
     @Override
-    public void getMovies(final GetMoviesDataCallback callback) {
+    public void getMovies(String lang, final GetMoviesDataCallback callback) {
         movieDbApi.getMovies(API_KEY, lang).enqueue(new Callback<DiscoverMovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<DiscoverMovieResponse> call, @NonNull Response<DiscoverMovieResponse> response) {
@@ -44,7 +40,7 @@ public class MovieOnlineDBDataSource implements MovieDataSource {
     }
 
     @Override
-    public void getDetailMovie(int movieId, final GetDetailDataCallback callback) {
+    public void getDetailMovie(int movieId, String lang, final GetDetailDataCallback callback) {
         movieDbApi.getDetailMovie(movieId, API_KEY, lang).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {

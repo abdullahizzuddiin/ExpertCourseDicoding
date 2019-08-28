@@ -1,5 +1,8 @@
 # ExpertCourseDicoding
 
+**Submission 3**
+https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808
+
 **Submission 2**  
 
 Fitur yang harus ada:

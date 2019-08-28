@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+import java.util.Locale;
 
 import id.dicoding.expertcourse.constant.MovieConst;
 import id.dicoding.expertcourse.model.BaseMovie;
@@ -17,11 +18,12 @@ import id.dicoding.expertcourse.repository.tvshow.TvShowRepository;
 
 public class BaseMovieListViewModel extends ViewModel implements MovieDataSource.GetMoviesDataCallback, TvShowDataSource.GetTvShowsLoadDataCallback
 {
-    private MutableLiveData<List<BaseMovie>> baseMovieList = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isFailure = new MutableLiveData<>();
-    private MovieRepository movieRepository;
-    private TvShowRepository tvShowRepository;
+    private final MutableLiveData<List<BaseMovie>> baseMovieList = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isFailure = new MutableLiveData<>();
+    private final MovieRepository movieRepository;
+    private final TvShowRepository tvShowRepository;
+    private String lang;
     private int movieType;
 
     public BaseMovieListViewModel() {
@@ -31,6 +33,18 @@ public class BaseMovieListViewModel extends ViewModel implements MovieDataSource
 
     public boolean hasInitiate() {
         return baseMovieList.getValue() != null;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public boolean isLangChanged(Locale newLocale) {
+        if(lang == null) {
+            return false;
+        }
+
+        return !newLocale.getLanguage().equals(new Locale(lang).getLanguage());
     }
 
     public void setBaseMovieType(int movieType) {
@@ -43,9 +57,9 @@ public class BaseMovieListViewModel extends ViewModel implements MovieDataSource
         isFailure.postValue(false);
 
         if(movieType == MovieConst.TYPE_MOVIES) {
-            movieRepository.getMovies(this);
+            movieRepository.getMovies(lang, this);
         } else {
-            tvShowRepository.getTvShows(this);
+            tvShowRepository.getTvShows(lang, this);
         }
     }
 

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
+import java.util.Locale;
 
 import id.dicoding.expertcourse.DetailActivity;
 import id.dicoding.expertcourse.R;
@@ -26,8 +27,6 @@ import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.ui.adapter.MovieListAdapter;
 import id.dicoding.expertcourse.util.ItemClickSupport;
 import id.dicoding.expertcourse.viewmodel.BaseMovieListViewModel;
-
-//import id.dicoding.expertcourse.DetailActivity;
 
 public class BaseMovieListFragment extends Fragment implements ItemClickSupport.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
@@ -43,19 +42,19 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_base_movie_list, container, false);
     }
-    private Observer<List<BaseMovie>> onBaseMovieListChanged = new Observer<List<BaseMovie>>() {
+    private final Observer<List<BaseMovie>> onBaseMovieListChanged = new Observer<List<BaseMovie>>() {
         @Override
         public void onChanged(List<BaseMovie> baseMovieList) {
             showMovieList(baseMovieList);
         }
     };
-    private Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isLoading) {
             showLoadingIndicator(isLoading);
         }
     };
-    private Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isFailed) {
             if(isFailed) {
@@ -67,13 +66,8 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupView(view);
-        setupAdapter();;
+        setupAdapter();
         setupListener();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -85,16 +79,18 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
 
     private void subscribeObserver() {
         baseMovieListViewModel = ViewModelProviders.of(this).get(BaseMovieListViewModel.class);
-        baseMovieListViewModel.getBaseMovieList().observe(this, onBaseMovieListChanged);
-        baseMovieListViewModel.isLoading().observe(this, onLoadingStatusChanged);
-        baseMovieListViewModel.isFailure().observe(this, onFailureStatusChanged);
+        baseMovieListViewModel.getBaseMovieList().observe(getViewLifecycleOwner(), onBaseMovieListChanged);
+        baseMovieListViewModel.isLoading().observe(getViewLifecycleOwner(), onLoadingStatusChanged);
+        baseMovieListViewModel.isFailure().observe(getViewLifecycleOwner(), onFailureStatusChanged);
     }
 
     private void initialStart() {
-        if(baseMovieListViewModel.hasInitiate()) {
+        Locale currentLocale = Locale.getDefault();
+        if(baseMovieListViewModel.hasInitiate() && !baseMovieListViewModel.isLangChanged(currentLocale)) {
             return;
         }
 
+        baseMovieListViewModel.setLang(currentLocale.getLanguage());
         baseMovieListViewModel.setBaseMovieType(getMovieType());
     }
 
