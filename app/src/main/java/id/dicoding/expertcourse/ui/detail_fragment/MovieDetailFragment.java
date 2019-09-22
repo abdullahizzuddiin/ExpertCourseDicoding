@@ -1,9 +1,11 @@
 package id.dicoding.expertcourse.ui.detail_fragment;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -44,19 +47,20 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
     private ConstraintLayout containerCl;
     private DetailMovieViewModel viewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Menu menuItem;
     private final Observer<Movie> onMovieLoaded = new Observer<Movie>() {
         @Override
         public void onChanged(Movie loadedMovie) {
             showMovie(loadedMovie);
         }
     };
-    private final Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onDataLoadingStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isLoading) {
             showLoadingIndicator(isLoading);
         }
     };
-    private final Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onDataLoadFailureStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isFailed) {
             if(isFailed) {
@@ -65,10 +69,17 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
             }
         }
     };
+    private final Observer<Boolean> onIsFavoriteStatusChanged = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean isFavorite) {
+            updateFavoriteIcon(isFavorite);
+        }
+    };
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -90,11 +101,33 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
         initialStart();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.detail_menu, menu);
+        menuItem = menu;
+        updateFavoriteIcon(viewModel.getFavoriteStatus());
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_to_favorite) {
+            onFavoriteMenuClick();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onFavoriteMenuClick() {
+        viewModel.onFavoriteClick();
+    }
+
     private void subscribeObserver() {
         viewModel = ViewModelProviders.of(this).get(DetailMovieViewModel.class);
         viewModel.getLoadedMovie().observe(getViewLifecycleOwner(), onMovieLoaded);
-        viewModel.isLoading().observe(getViewLifecycleOwner(), onLoadingStatusChanged);
-        viewModel.isFailure().observe(getViewLifecycleOwner(), onFailureStatusChanged);
+        viewModel.isDataLoading().observe(getViewLifecycleOwner(), onDataLoadingStatusChanged);
+        viewModel.isDataLoadFailure().observe(getViewLifecycleOwner(), onDataLoadFailureStatusChanged);
+        viewModel.isFavorite().observe(getViewLifecycleOwner(), onIsFavoriteStatusChanged);
     }
 
     private void initialStart() {
@@ -180,6 +213,15 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
         revenueTv.setText(toDollar(movie.getRevenue()));
         budgetTv.setText(toDollar(movie.getBudget()));
         genresTv.setText(movie.getGenreListInText());
+    }
+
+    private void updateFavoriteIcon(boolean isFavorite) {
+        if(menuItem == null) {
+            return;
+        }
+
+        int icon = isFavorite ? R.drawable.ic_added_to_favorite : R.drawable.ic_add_to_favorite;
+        menuItem.getItem(0).setIcon(ContextCompat.getDrawable(getContext(), icon));
     }
 
     @Override

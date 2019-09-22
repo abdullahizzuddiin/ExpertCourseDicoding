@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import id.dicoding.expertcourse.constant.MovieConst;
 import id.dicoding.expertcourse.ui.adapter.BaseMoviePagerAdapter;
 import id.dicoding.expertcourse.ui.base_movie_list.BaseMovieListFragment;
+import id.dicoding.expertcourse.ui.base_movie_list.FavoriteMovieListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager baseMovieViewPager;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         pagerAdapter.addContents(getMovieTypeFragment(), getString(R.string.movie_view_pager_label));
         pagerAdapter.addContents(getTvShowTypeFragment(), getString(R.string.tv_show_view_pager_label));
+        pagerAdapter.addContents(getFavoriteMovieFragment(), getString(R.string.favorite_view_pager_label));
         baseMovieViewPager.setOffscreenPageLimit(2);
         baseMovieViewPager.setAdapter(pagerAdapter);
     }
@@ -67,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         BaseMovieListFragment fragment = new BaseMovieListFragment();
         fragment.setArguments(extras);
         return fragment;
+    }
+
+    private Fragment getFavoriteMovieFragment() {
+        return new FavoriteMovieListFragment();
     }
 
     private void setupView() {

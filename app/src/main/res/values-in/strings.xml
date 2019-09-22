@@ -13,7 +13,8 @@
     </plurals>
 
     <string name="movie_view_pager_label">Film</string>
-    <string name="tv_show_view_pager_label">Acara TV</string>
+    <string name="tv_show_view_pager_label">Serial TV</string>
+    <string name="favorite_view_pager_label">Favorit</string>
 
     <string name="no_movie_title">Tidak ada data.</string>
     <plurals name="vote_count_text">

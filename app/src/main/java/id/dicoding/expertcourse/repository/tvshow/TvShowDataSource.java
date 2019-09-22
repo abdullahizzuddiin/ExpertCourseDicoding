@@ -4,21 +4,14 @@ import java.util.List;
 
 import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.model.TvShow;
+import id.dicoding.expertcourse.repository.BaseLoadDataCallback;
 
 public interface TvShowDataSource {
     void getTvShows(String lang, GetTvShowsLoadDataCallback callback);
 
     void getDetailTvShow(int tvShowId, String lang, GetDetailDataCallback callback);
 
-    interface GetTvShowsLoadDataCallback {
-        void onDataLoaded(List<BaseMovie> tvShowList);
+    interface GetTvShowsLoadDataCallback extends BaseLoadDataCallback<List<BaseMovie>> {}
 
-        void onFailure();
-    }
-
-    interface GetDetailDataCallback {
-        void onDataLoaded(TvShow tvShow);
-
-        void onFailure();
-    }
+    interface GetDetailDataCallback extends BaseLoadDataCallback<TvShow> {}
 }

@@ -3,6 +3,9 @@ package id.dicoding.expertcourse.ui.detail_fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -39,27 +43,41 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
     private ConstraintLayout containerCl;
     private DetailTvShowViewModel viewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Menu menuItem;
+
     private final Observer<TvShow> onTvShowLoaded = new Observer<TvShow>() {
         @Override
         public void onChanged(TvShow loadedTvShow) {
             showTvShow(loadedTvShow);
         }
     };
-    private final Observer<Boolean> onLoadingStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onDataLoadingStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isLoading) {
             showLoadingIndicator(isLoading);
         }
     };
-    private final Observer<Boolean> onFailureStatusChanged = new Observer<Boolean>() {
+    private final Observer<Boolean> onDataLoadFailureStatusChanged = new Observer<Boolean>() {
         @Override
         public void onChanged(Boolean isFailed) {
             if(isFailed) {
-                swipeRefreshLayout.setRefreshing(false);
+                showLoadingIndicator(false);
                 showEmptyView();
             }
         }
     };
+    private final Observer<Boolean> onIsFavoriteStatusChanged = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean isFavorite) {
+            updateFavoriteIcon(isFavorite);
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -80,11 +98,32 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
         initialStart();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.detail_menu, menu);
+        menuItem = menu;
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_to_favorite) {
+            onFavoriteMenuClick();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onFavoriteMenuClick() {
+        viewModel.onFavoriteClick();
+    }
+
     private void subscribeObserver() {
         viewModel = ViewModelProviders.of(this).get(DetailTvShowViewModel.class);
         viewModel.getLoadedTvShow().observe(getViewLifecycleOwner(), onTvShowLoaded);
-        viewModel.isLoading().observe(getViewLifecycleOwner(), onLoadingStatusChanged);
-        viewModel.isFailure().observe(getViewLifecycleOwner(), onFailureStatusChanged);
+        viewModel.isDataLoading().observe(getViewLifecycleOwner(), onDataLoadingStatusChanged);
+        viewModel.isDataLoadFailure().observe(getViewLifecycleOwner(), onDataLoadFailureStatusChanged);
+        viewModel.isFavorite().observe(getViewLifecycleOwner(), onIsFavoriteStatusChanged);
     }
 
     private void initialStart() {
@@ -164,6 +203,15 @@ public class TvShowDetailFragment extends Fragment implements SwipeRefreshLayout
             containerCl.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void updateFavoriteIcon(boolean isFavorite) {
+        if(menuItem == null) {
+            return;
+        }
+
+        int icon = isFavorite ? R.drawable.ic_added_to_favorite : R.drawable.ic_add_to_favorite;
+        menuItem.getItem(0).setIcon(ContextCompat.getDrawable(getContext(), icon));
     }
 
     @Override

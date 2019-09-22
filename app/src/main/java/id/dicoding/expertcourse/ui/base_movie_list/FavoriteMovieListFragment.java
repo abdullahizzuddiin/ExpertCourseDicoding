@@ -18,51 +18,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
-import java.util.Locale;
 
 import id.dicoding.expertcourse.DetailActivity;
 import id.dicoding.expertcourse.R;
-import id.dicoding.expertcourse.constant.MovieConst;
-import id.dicoding.expertcourse.model.BaseMovie;
-import id.dicoding.expertcourse.ui.adapter.MovieListAdapter;
+import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.ui.adapter.FavoriteMovieListAdapter;
 import id.dicoding.expertcourse.util.ItemClickSupport;
-import id.dicoding.expertcourse.viewmodel.BaseMovieListViewModel;
+import id.dicoding.expertcourse.viewmodel.FavoriteBaseMovieListViewModel;
 
-public class BaseMovieListFragment extends Fragment implements ItemClickSupport.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FavoriteMovieListFragment extends Fragment implements ItemClickSupport.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvFailureMessage;
-    private MovieListAdapter adapter;
-
-    private BaseMovieListViewModel baseMovieListViewModel;
+    private FavoriteMovieListAdapter adapter;
+    private FavoriteBaseMovieListViewModel baseMovieListViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_base_movie_list, container, false);
     }
-    private final Observer<List<BaseMovie>> onBaseMovieListChanged = new Observer<List<BaseMovie>>() {
-        @Override
-        public void onChanged(List<BaseMovie> baseMovieList) {
-            showMovieList(baseMovieList);
-        }
-    };
-    private final Observer<Boolean> onDataLoadingStatusChanged = new Observer<Boolean>() {
-        @Override
-        public void onChanged(Boolean isLoading) {
-            showLoadingIndicator(isLoading);
-        }
-    };
-    private final Observer<Boolean> onDataLoadFailureStatusChanged = new Observer<Boolean>() {
-        @Override
-        public void onChanged(Boolean isFailed) {
-            if(isFailed) {
-                showFailureMessage();
-            }
-        }
-    };
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupView(view);
@@ -78,25 +54,14 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
     }
 
     private void subscribeObserver() {
-        baseMovieListViewModel = ViewModelProviders.of(this).get(BaseMovieListViewModel.class);
-        baseMovieListViewModel.getBaseMovieList().observe(getViewLifecycleOwner(), onBaseMovieListChanged);
+        baseMovieListViewModel = ViewModelProviders.of(this).get(FavoriteBaseMovieListViewModel.class);
+        baseMovieListViewModel.getFavoriteBaseMovieList().observe(getViewLifecycleOwner(), onBaseMovieListChanged);
         baseMovieListViewModel.isLoading().observe(getViewLifecycleOwner(), onDataLoadingStatusChanged);
         baseMovieListViewModel.isFailure().observe(getViewLifecycleOwner(), onDataLoadFailureStatusChanged);
     }
 
     private void initialStart() {
-        Locale currentLocale = Locale.getDefault();
-        if(baseMovieListViewModel.hasInitiate() && !baseMovieListViewModel.isLangChanged(currentLocale)) {
-            return;
-        }
 
-        baseMovieListViewModel.setLang(currentLocale.getLanguage());
-        baseMovieListViewModel.setBaseMovieType(getMovieType());
-    }
-
-    private void showMovieList(List<BaseMovie> baseMovieList) {
-        adapter.clearData();
-        adapter.setData(baseMovieList);
     }
 
     private void setupView(View view) {
@@ -107,7 +72,7 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
     }
 
     private void setupAdapter() {
-        adapter = new MovieListAdapter();
+        adapter = new FavoriteMovieListAdapter();
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -119,28 +84,28 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private int getMovieType() {
-        Bundle extras = getArguments();
+    @Override
+    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+        FavoriteBaseMovie favoriteBaseMovie = baseMovieListViewModel.getFavoriteBaseMovieByPosition(position);
+        navigateToDetailView(favoriteBaseMovie);
+    }
 
-        if(extras == null) {
-            return MovieConst.TYPE_MOVIES;
-        }
-
-        return extras.getInt(getString(R.string.extra_data_base_movie_type), MovieConst.TYPE_MOVIES);
+    private void navigateToDetailView(FavoriteBaseMovie favoriteBaseMovie) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(getString(R.string.extra_data_base_movie_type), favoriteBaseMovie.getType());
+        intent.putExtra(getString(R.string.extra_data_base_movie_title), favoriteBaseMovie.getOriginalTitle());
+        intent.putExtra(getString(R.string.extra_data_base_movie_id), favoriteBaseMovie.getId());
+        startActivity(intent);
     }
 
     @Override
-    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        BaseMovie baseMovie = baseMovieListViewModel.getBaseMovieByPosition(position);
-        navigateToDetailView(baseMovie);
+    public void onRefresh() {
+        baseMovieListViewModel.getFavoriteBaseMovies();
     }
 
-    private void navigateToDetailView(BaseMovie baseMovie) {
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra(getString(R.string.extra_data_base_movie_type), baseMovieListViewModel.getMovieType());
-        intent.putExtra(getString(R.string.extra_data_base_movie_title), baseMovie.getOriginalTitle());
-        intent.putExtra(getString(R.string.extra_data_base_movie_id), baseMovie.getId());
-        startActivity(intent);
+    private void showMovieList(List<FavoriteBaseMovie> baseMovieList) {
+        adapter.clearData();
+        adapter.setData(baseMovieList);
     }
 
     private void showLoadingIndicator(boolean isLoading) {
@@ -163,8 +128,24 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    @Override
-    public void onRefresh() {
-        baseMovieListViewModel.setBaseMovieType(baseMovieListViewModel.getMovieType());
-    }
+    private final Observer<List<FavoriteBaseMovie>> onBaseMovieListChanged = new Observer<List<FavoriteBaseMovie>>() {
+        @Override
+        public void onChanged(List<FavoriteBaseMovie> baseMovieList) {
+            showMovieList(baseMovieList);
+        }
+    };
+    private final Observer<Boolean> onDataLoadingStatusChanged = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean isLoading) {
+            showLoadingIndicator(isLoading);
+        }
+    };
+    private final Observer<Boolean> onDataLoadFailureStatusChanged = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean isFailed) {
+            if(isFailed) {
+                showFailureMessage();
+            }
+        }
+    };
 }
