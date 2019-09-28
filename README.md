@@ -18,3 +18,6 @@ Sumber belajar MVP dan Repository Pattern
 https://medium.com/mindorks/android-mvp-architecture-101-cf6eaa0908f3
 https://medium.com/easyread/android-mvp-series-membangun-aplikasi-android-dengan-arsitektur-mvp-fbf1f77ecaec
 https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/
+
+Submission 5
+Icons made by Dimi Kazak (Flat Icon)
