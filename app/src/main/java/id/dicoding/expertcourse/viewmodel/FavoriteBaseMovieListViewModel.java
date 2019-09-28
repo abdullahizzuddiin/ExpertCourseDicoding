@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.db.model.FavoriteBaseMovie;
 import id.dicoding.expertcourse.repository.favorite_base_movie.FavoriteBaseMovieLocalDBDataSource;
 import id.dicoding.expertcourse.repository.favorite_base_movie.FavoriteBaseMovieRepository;
 

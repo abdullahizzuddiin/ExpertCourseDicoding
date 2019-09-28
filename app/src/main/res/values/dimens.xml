@@ -4,4 +4,10 @@
     <dimen name="list_horizontal_margin">8dp</dimen>
     <dimen name="movie_logo_row_standard_width">120dp</dimen>
     <dimen name="movie_logo_row_standard_height">160dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

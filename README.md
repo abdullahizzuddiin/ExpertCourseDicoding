@@ -21,3 +21,4 @@ https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/
 
 Submission 5
 Icons made by Dimi Kazak (Flat Icon)
+Glide menggantikan Picasso. Soalnya Picasso susah munculin gambar di StackRemoteViewsFactory

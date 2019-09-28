@@ -1,18 +1,4 @@
 <resources>
-    <string name="app_name">Movie Catalogue</string>
-    <string name="movie_banner_content_description">Movie Banner</string>
-    <string name="fact_label">Some Facts!</string>
-    <string name="budget_label">Budget</string>
-    <string name="revenue_label">Revenue</string>
-    <string name="runtime_label">Runtime</string>
-    <string name="status_label">Status</string>
-    <string name="original_language_label">Original Language</string>
-    <string name="change_language_settings">Change Language Settings</string>
-
-    <string name="movie_view_pager_label">Movies</string>
-    <string name="tv_show_view_pager_label">TV Series</string>
-    <string name="favorite_view_pager_label">Favorite</string>
-
     <plurals name="runtime_format">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
@@ -21,6 +7,20 @@
         <item quantity="one">(%d vote)</item>
         <item quantity="other">(%d votes)</item>
     </plurals>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="movie_banner_content_description">Movie Banner</string>
+    <string name="fact_label">Some Facts!</string>
+    <string name="budget_label">Budget</string>
+    <string name="revenue_label">Revenue</string>
+    <string name="runtime_label">Runtime</string>
+    <string name="status_label">Status</string>
+
+    <string name="original_language_label">Original Language</string>
+    <string name="change_language_settings">Change Language Settings</string>
+    <string name="movie_view_pager_label">Movies</string>
+
+    <string name="tv_show_view_pager_label">TV Series</string>
+    <string name="favorite_view_pager_label">Favorite</string>
     <string name="movie_rate_text_example" translatable="false">8.7</string>
     <string name="movie_vote_count_text_example" translatable="false">(1000 votesss)</string>
     <string name="movie_name_example" translatable="false">The Girl in the Spider\'s Webstorm ft PHPStorm</string>

@@ -1,7 +1,11 @@
-package id.dicoding.expertcourse.model;
+package id.dicoding.expertcourse.db.model;
+
+import android.database.Cursor;
+import android.provider.BaseColumns;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.text.ParseException;
@@ -10,33 +14,61 @@ import java.util.Date;
 import java.util.Locale;
 
 import id.dicoding.expertcourse.constant.MovieConst;
+import id.dicoding.expertcourse.model.BaseMovie;
 
 import static id.dicoding.expertcourse.request.ApiUtil.BASE_MEDIUM_IMAGE_URL;
 
-@Entity(tableName =  "favorite_base_movie")
+@Entity(tableName =  FavoriteBaseMovie.TABLE_NAME)
 public class FavoriteBaseMovie {
+    public static final String TABLE_NAME = "favorite_base_movie";
+    public static final String COLUMN_ID = BaseColumns._ID;
+    public static final String COLUMN_ORIGINAL_TITLE = "original_title";
+    public static final String COLUMN_POSTER_PATH = "poster_path";
+    public static final String COLUMN_RELEASE_DATE = "release_date";
+    public static final String COLUMN_VOTE_AVERAGE = "vote_average";
+    public static final String COLUMN_OVERVIEW = "overview";
+    public static final String COLUMN_TYPE = "type";
+
+    public static final int INDEX_MOVIE_ID = 0;
+    public static final int INDEX_MOVIE_TITLE = 1;
+    public static final int INDEX_MOVIE_POSTER_PATH = 2;
+    public static final int INDEX_MOVIE_TYPE = 6;
+
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo(index =  true, name = COLUMN_ID)
+    private int id; //0
 
-    @ColumnInfo(name = "original_title")
-    private String originalTitle;
+    @ColumnInfo(name = COLUMN_ORIGINAL_TITLE)
+    private String originalTitle; //1
 
-    @ColumnInfo(name = "poster_path")
-    private String posterPath;
+    @ColumnInfo(name = COLUMN_POSTER_PATH)
+    private String posterPath; //2
 
-    @ColumnInfo(name = "release_date")
-    private String releaseDate;
+    @ColumnInfo(name = COLUMN_RELEASE_DATE)
+    private String releaseDate; //3
 
-    @ColumnInfo(name = "vote_average")
-    private double voteAverage;
+    @ColumnInfo(name = COLUMN_VOTE_AVERAGE)
+    private double voteAverage; //4
 
-    @ColumnInfo(name = "overview")
-    private String overview;
+    @ColumnInfo(name = COLUMN_OVERVIEW)
+    private String overview; //5
 
-    @ColumnInfo(name = "type")
-    private int type;
+    @ColumnInfo(name = COLUMN_TYPE)
+    private int type; //6
 
     public FavoriteBaseMovie() {}
+
+
+    @Ignore
+    public FavoriteBaseMovie(Cursor cursor) {
+        this.id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        this.originalTitle = cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_TITLE));
+        this.posterPath = cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_PATH));
+        this.releaseDate = cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE));
+        this.voteAverage = cursor.getDouble(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE));
+        this.overview = cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW));
+        this.type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
+    }
 
     public int getId() {
         return id;

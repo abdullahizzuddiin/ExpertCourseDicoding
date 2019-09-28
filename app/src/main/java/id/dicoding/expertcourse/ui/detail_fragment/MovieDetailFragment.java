@@ -1,6 +1,6 @@
 package id.dicoding.expertcourse.ui.detail_fragment;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,15 +21,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.Locale;
 
 import id.dicoding.expertcourse.R;
 import id.dicoding.expertcourse.model.Movie;
 import id.dicoding.expertcourse.viewmodel.DetailMovieViewModel;
+import id.dicoding.expertcourse.widget.FavoriteMovieWidget;
 
 import static id.dicoding.expertcourse.util.CurrencyFormatter.toDollar;
+import static id.dicoding.expertcourse.widget.FavoriteMovieWidget.WIDGET_UPDATE_ACTION;
 
 public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private ImageView bannerIv;
@@ -73,6 +76,7 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
         @Override
         public void onChanged(Boolean isFavorite) {
             updateFavoriteIcon(isFavorite);
+            updateWidget();
         }
     };
 
@@ -197,11 +201,11 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void showMovie(Movie movie) {
-        Picasso.get().
-                load(movie.getBannerUrl()).
-                config(Bitmap.Config.RGB_565).
-                fit().
-                into(bannerIv);
+        Glide.with(this)
+                .load(movie.getBannerUrl())
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(bannerIv);
         titleTv.setText(movie.getOriginalTitle());
         releaseYearTv.setText(getString(R.string.text_with_bracket, movie.getReleaseYear()));
         reviewScoreTv.setText(String.valueOf(movie.getVoteAverage()));
@@ -222,6 +226,17 @@ public class MovieDetailFragment extends Fragment implements SwipeRefreshLayout.
 
         int icon = isFavorite ? R.drawable.ic_added_to_favorite : R.drawable.ic_add_to_favorite;
         menuItem.getItem(0).setIcon(ContextCompat.getDrawable(getContext(), icon));
+    }
+
+    private void updateWidget() {
+        if(getActivity() == null) {
+            return;
+        }
+
+        Intent i = new Intent(getActivity(), FavoriteMovieWidget.class);
+        i.setAction(WIDGET_UPDATE_ACTION);
+        getActivity().sendBroadcast(i);
+
     }
 
     @Override

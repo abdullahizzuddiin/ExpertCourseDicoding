@@ -1,7 +1,6 @@
 package id.dicoding.expertcourse.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import id.dicoding.expertcourse.R;
-import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.db.model.FavoriteBaseMovie;
 
 public class FavoriteMovieListAdapter extends RecyclerView.Adapter<FavoriteMovieListAdapter.ViewHolder> {
     private final List<FavoriteBaseMovie> movieList = new ArrayList<>();
@@ -59,6 +59,7 @@ public class FavoriteMovieListAdapter extends RecyclerView.Adapter<FavoriteMovie
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        private Context context;
         private final ImageView logoIv;
         private final TextView titleTv;
         private final TextView releaseYearTv;
@@ -67,6 +68,7 @@ public class FavoriteMovieListAdapter extends RecyclerView.Adapter<FavoriteMovie
 
         ViewHolder(View view) {
             super(view);
+            context = view.getContext();
             logoIv = view.findViewById(R.id.iv_movie_logo_row);
             titleTv = view.findViewById(R.id.tv_movie_title_row);
             releaseYearTv = view.findViewById(R.id.tv_movie_release_year_row);
@@ -75,11 +77,11 @@ public class FavoriteMovieListAdapter extends RecyclerView.Adapter<FavoriteMovie
         }
 
         void bind(FavoriteBaseMovie movie, String overview) {
-            Picasso.get().
-                    load(movie.getPosterUrl()).
-                    config(Bitmap.Config.RGB_565).
-                    fit().
-                    into(logoIv);
+            Glide.with(context)
+                    .load(movie.getPosterUrl())
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(logoIv);
 
             titleTv.setText(movie.getOriginalTitle());
             releaseYearTv.setText(movie.getReleaseYear());

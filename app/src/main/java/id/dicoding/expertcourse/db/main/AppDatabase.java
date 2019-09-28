@@ -1,4 +1,4 @@
-package id.dicoding.expertcourse.db;
+package id.dicoding.expertcourse.db.main;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.db.model.FavoriteBaseMovie;
 
 @Database(entities = {FavoriteBaseMovie.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

@@ -1,4 +1,4 @@
-package id.dicoding.expertcourse.db;
+package id.dicoding.expertcourse.db.main;
 
 /*
  * Copyright (C) 2017 The Android Open Source Project

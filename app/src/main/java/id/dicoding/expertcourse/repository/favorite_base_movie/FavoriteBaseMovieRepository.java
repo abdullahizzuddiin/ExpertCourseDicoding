@@ -1,10 +1,12 @@
 package id.dicoding.expertcourse.repository.favorite_base_movie;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.db.model.FavoriteBaseMovie;
 
 public class FavoriteBaseMovieRepository implements FavoriteBaseMovieDataSource {
     private final FavoriteBaseMovieDataSource favoriteBaseMovieDataSource;
@@ -16,6 +18,11 @@ public class FavoriteBaseMovieRepository implements FavoriteBaseMovieDataSource 
     @Override
     public LiveData<List<FavoriteBaseMovie>> getFavoriteBaseMovies() {
         return favoriteBaseMovieDataSource.getFavoriteBaseMovies();
+    }
+
+    @Override
+    public Cursor getFavoriteBaseMoviesCursor() {
+        return favoriteBaseMovieDataSource.getFavoriteBaseMoviesCursor();
     }
 
     @Override

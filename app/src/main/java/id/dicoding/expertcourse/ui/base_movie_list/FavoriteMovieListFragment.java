@@ -21,7 +21,7 @@ import java.util.List;
 
 import id.dicoding.expertcourse.DetailActivity;
 import id.dicoding.expertcourse.R;
-import id.dicoding.expertcourse.model.FavoriteBaseMovie;
+import id.dicoding.expertcourse.db.model.FavoriteBaseMovie;
 import id.dicoding.expertcourse.ui.adapter.FavoriteMovieListAdapter;
 import id.dicoding.expertcourse.util.ItemClickSupport;
 import id.dicoding.expertcourse.viewmodel.FavoriteBaseMovieListViewModel;
