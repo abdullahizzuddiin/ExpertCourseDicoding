@@ -8,6 +8,7 @@
         <item quantity="other">(%d votes)</item>
     </plurals>
     <string name="app_name">Movie Catalogue</string>
+    <string name="setting_title">Settings</string>
     <string name="movie_banner_content_description">Movie Banner</string>
     <string name="fact_label">Some Facts!</string>
     <string name="budget_label">Budget</string>
@@ -16,7 +17,7 @@
     <string name="status_label">Status</string>
 
     <string name="original_language_label">Original Language</string>
-    <string name="change_language_settings">Change Language Settings</string>
+    <string name="menu_settings">Settings</string>
     <string name="movie_view_pager_label">Movies</string>
 
     <string name="tv_show_view_pager_label">TV Series</string>
@@ -42,4 +43,16 @@
     <string name="text_with_bracket" translatable="false">(%1$s)</string>
     <string name="no_overview_text">No overview provided</string>
     <string name="failure_get_base_movie_message">Aww, I failed to get movies for you. Pull to try again\n(Server in trouble)</string>
+
+    <string name="language_pref_category">Language</string>
+    <string name="language_pref_key" translatable="false">language</string>
+    <string name="language_pref_title">🇬🇧 \tEnglish</string>
+    <string name="reminder_notification_pref_category">Notification</string>
+    <string name="daily_reminder_pref_key" translatable="false">daily_reminder</string>
+    <string name="daily_reminder_pref_title">Daily Reminder</string>
+    <string name="daily_reminder_pref_summary">Get daily reminder to check the app</string>
+
+    <string name="release_reminder_pref_key" translatable="false">release_notification</string>
+    <string name="release_reminder_pref_title">Release Notification</string>
+    <string name="release_reminder_pref_summary">Get this week release film notification</string>
 </resources>

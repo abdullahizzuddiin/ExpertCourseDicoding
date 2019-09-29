@@ -1,7 +1,7 @@
 package id.dicoding.expertcourse;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,12 +79,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void showBackButtonNavigation() {
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+        if(getSupportActionBar() == null) {
+            return;
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     /**
@@ -105,8 +105,15 @@ public class DetailActivity extends AppCompatActivity {
         } else if (id == android.R.id.home) {
             onBackPressed();
             return true;
+        } else if (item.getItemId() == R.id.action_settings) {
+            navigateToSettingView();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void navigateToSettingView() {
+        Intent startSettingsActivity = new Intent(this, SettingActivity.class);
+        startActivity(startSettingsActivity);
     }
 }

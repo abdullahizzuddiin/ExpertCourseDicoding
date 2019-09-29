@@ -2,7 +2,6 @@ package id.dicoding.expertcourse;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,12 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_change_language_settings) {
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
+        if (item.getItemId() == R.id.action_settings) {
+            navigateToSettingView();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void navigateToSettingView() {
+        Intent startSettingsActivity = new Intent(this, SettingActivity.class);
+        startActivity(startSettingsActivity);
     }
 
     private void setupViewPager() {

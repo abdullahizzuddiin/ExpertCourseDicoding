@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/language_pref_category"
+        app:iconSpaceReserved="false">
+        <Preference
+            android:key="@string/language_pref_key"
+            android:summary="@string/language_pref_category"
+            android:title="@string/language_pref_title"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/reminder_notification_pref_category"
+        app:iconSpaceReserved="false">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/daily_reminder_pref_key"
+            android:summary="@string/daily_reminder_pref_summary"
+            android:title="@string/daily_reminder_pref_title"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/release_reminder_pref_key"
+            android:summary="@string/release_reminder_pref_summary"
+            android:title="@string/release_reminder_pref_title"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
