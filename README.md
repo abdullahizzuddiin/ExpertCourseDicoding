@@ -22,3 +22,5 @@ https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/
 Submission 5
 Icons made by Dimi Kazak (Flat Icon)
 Glide menggantikan Picasso. Soalnya Picasso susah munculin gambar di StackRemoteViewsFactory
+INfo tentang work manager buat menggantikan firebasedispatcher
+https://medium.com/@kevalpatel2106/exploring-jetpack-scheduling-tasks-with-work-manager-fba20d7c69bf

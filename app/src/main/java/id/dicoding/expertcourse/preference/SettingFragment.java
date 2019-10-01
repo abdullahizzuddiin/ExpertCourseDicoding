@@ -10,6 +10,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import id.dicoding.expertcourse.R;
+import id.dicoding.expertcourse.reminder_service.DailyReminderDispatcher;
+import id.dicoding.expertcourse.reminder_service.ReleaseNotificationDispatcher;
 
 public class SettingFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
     private String LANGUAGE_KEY;
@@ -19,13 +21,18 @@ public class SettingFragment extends PreferenceFragmentCompat implements SharedP
     private Preference languagePref;
     private SwitchPreference dailyReminderPref;
     private SwitchPreference releaseNotificationPref;
+
+    private DailyReminderDispatcher dailyReminderDispatcher;
+    private ReleaseNotificationDispatcher releaseNotificationDispatcher;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
         setupKeyVariable();
         setupView();
         setInitialPref();
-        languagePref.setOnPreferenceClickListener(this);
+        setListener();
+        setupDisptacher();
     }
 
     private void setupKeyVariable() {
@@ -46,6 +53,15 @@ public class SettingFragment extends PreferenceFragmentCompat implements SharedP
         releaseNotificationPref.setChecked(sh.getBoolean(RELEASE_NOTIFICATION_KEY, false));
     }
 
+    private void setListener() {
+        languagePref.setOnPreferenceClickListener(this);
+    }
+
+    private void setupDisptacher() {
+        dailyReminderDispatcher = new DailyReminderDispatcher(getContext());
+        releaseNotificationDispatcher = new ReleaseNotificationDispatcher(getContext());
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -60,11 +76,31 @@ public class SettingFragment extends PreferenceFragmentCompat implements SharedP
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(DAILY_REMINDER_KEY)) {
-            dailyReminderPref.setChecked(sharedPreferences.getBoolean(DAILY_REMINDER_KEY, false));
+            boolean dailyReminderPreferenceValue = sharedPreferences.getBoolean(DAILY_REMINDER_KEY, false);
+            dailyReminderPref.setChecked(dailyReminderPreferenceValue);
+            onDailyReminderValueChanged(dailyReminderPreferenceValue);
         }
 
         if(key.equals(RELEASE_NOTIFICATION_KEY)) {
-            releaseNotificationPref.setChecked(sharedPreferences.getBoolean(RELEASE_NOTIFICATION_KEY, false));
+            boolean releaseNotificationPreferenceValue = sharedPreferences.getBoolean(RELEASE_NOTIFICATION_KEY, false);
+            releaseNotificationPref.setChecked(releaseNotificationPreferenceValue);
+            onReleaseNotifcationValueChanged(releaseNotificationPreferenceValue);
+        }
+    }
+
+    private void onDailyReminderValueChanged(boolean dailyReminderPreferenceValue) {
+        if(dailyReminderPreferenceValue) {
+            dailyReminderDispatcher.startDailyReminderInitialDispatcher();
+        } else {
+            dailyReminderDispatcher.cancelDailyReminderDispatcher();
+        }
+    }
+
+    private void onReleaseNotifcationValueChanged(boolean releaseNotificationPreferenceValue) {
+        if(releaseNotificationPreferenceValue) {
+            releaseNotificationDispatcher.startReleaseNotificationInitialDispatcher();
+        } else {
+            releaseNotificationDispatcher.cancelReleaseNotificationDispatcher();
         }
     }
 

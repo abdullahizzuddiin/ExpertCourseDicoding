@@ -9,6 +9,8 @@ import id.dicoding.expertcourse.repository.BaseLoadDataCallback;
 public interface MovieDataSource {
     void getMovies(String lang, GetMoviesDataCallback callback);
 
+    void getReleaseTodayMovies(String lang, String primaryReleaseDateGTE, String primaryReleaseDateLTE, GetMoviesDataCallback callback);
+
     void getDetailMovie(int movieId, String lang, GetDetailDataCallback callback);
 
     interface GetMoviesDataCallback extends BaseLoadDataCallback<List<BaseMovie>> {}

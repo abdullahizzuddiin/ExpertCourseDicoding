@@ -31,7 +31,6 @@ public class FavoriteBaseMovie {
 
     public static final int INDEX_MOVIE_ID = 0;
     public static final int INDEX_MOVIE_TITLE = 1;
-    public static final int INDEX_MOVIE_POSTER_PATH = 2;
     public static final int INDEX_MOVIE_TYPE = 6;
 
     @PrimaryKey(autoGenerate = true)

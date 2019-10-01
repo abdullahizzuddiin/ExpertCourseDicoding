@@ -40,6 +40,25 @@ public class MovieOnlineDBDataSource implements MovieDataSource {
     }
 
     @Override
+    public void getReleaseTodayMovies(String lang, String primaryReleaseDateGTE, String primaryReleaseDateLTE, final GetMoviesDataCallback callback) {
+        movieDbApi.getReleaseTodayMovies(API_KEY, lang, primaryReleaseDateGTE, primaryReleaseDateLTE).enqueue(new Callback<DiscoverMovieResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<DiscoverMovieResponse> call, @NonNull Response<DiscoverMovieResponse> response) {
+                if(!response.isSuccessful()) {
+                    callback.onFailure();
+                    return;
+                }
+
+                callback.onDataLoaded(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<DiscoverMovieResponse> call, Throwable t) {
+                callback.onFailure();
+            }        });
+    }
+
+    @Override
     public void getDetailMovie(int movieId, String lang, final GetDetailDataCallback callback) {
         movieDbApi.getDetailMovie(movieId, API_KEY, lang).enqueue(new Callback<Movie>() {
             @Override

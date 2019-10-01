@@ -13,6 +13,11 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
+    public void getReleaseTodayMovies(String lang, String primaryReleaseDateGTE, String primaryReleaseDateLTE, GetMoviesDataCallback callback) {
+        movieDataSource.getReleaseTodayMovies(lang, primaryReleaseDateGTE, primaryReleaseDateLTE, callback);
+    }
+
+    @Override
     public void getDetailMovie(int movieId, String lang, final GetDetailDataCallback callback) {
         movieDataSource.getDetailMovie(movieId, lang, callback);
     }

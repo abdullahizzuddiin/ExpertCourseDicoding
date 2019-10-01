@@ -55,4 +55,13 @@
     <string name="release_reminder_pref_key" translatable="false">release_notification</string>
     <string name="release_reminder_pref_title">Release Notification</string>
     <string name="release_reminder_pref_summary">Get this week release film notification</string>
+    <string name="notification_unavailable">Notification service not available on your device</string>
+    <string name="daily_reminder_notification_title">Go, Open This App!</string>
+    <string name="daily_reminder_notification_message">You don\'t want to miss latest movies, do you?</string>
+    <string name="daily_reminder_notification_channel_name">Daily Reminder</string>
+
+    <string name="release_notification_title">%1$s, Release Today!</string>
+    <string name="empty_release_notification_title">No Movie Release Today!</string>
+    <string name="release_notification_message">Tap for detail information</string>
+    <string name="release_notification_channel_name">Release Film Notification</string>
 </resources>

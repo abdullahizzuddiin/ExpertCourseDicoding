@@ -15,6 +15,13 @@ public interface MovieDBApi {
             @Query("api_key") String key,
             @Query("language") String lang);
 
+    @GET("discover/movie")
+    Call<DiscoverMovieResponse> getReleaseTodayMovies(
+            @Query("api_key") String key,
+            @Query("language") String lang,
+            @Query("primary_release_date.gte") String primaryReleaseDateGTE,
+            @Query("primary_release_date.lte") String primaryReleaseDateLTE);
+
     @GET("discover/tv")
     Call<DiscoverMovieResponse> getTvShow(
             @Query("api_key") String key,

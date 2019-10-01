@@ -34,4 +34,13 @@
 
     <string name="release_reminder_pref_title">Info Film Rilis</string>
     <string name="release_reminder_pref_summary">Dapatkan notifikasi film yang baru saja rilis</string>
+    <string name="notification_unavailable">Layanan notifikasi tidak tersedia di gawai Anda</string>
+    <string name="daily_reminder_notification_title">Go, Buka Aplikasinya!</string>
+    <string name="daily_reminder_notification_message">Tidak mau ketinggalan info film terbaru kan?</string>
+    <string name="daily_reminder_notification_channel_name">Pengingat Harian</string>
+
+    <string name="release_notification_title">%1$s, Keluar Hari Ini!</string>
+    <string name="empty_release_notification_title">Tidak Ada Film Rilis Hari Ini!</string>
+    <string name="release_notification_message">Klik untuk informasi lebih lengkap</string>
+    <string name="release_notification_channel_name">Notifikasi Film Hari Ini</string>
 </resources>
