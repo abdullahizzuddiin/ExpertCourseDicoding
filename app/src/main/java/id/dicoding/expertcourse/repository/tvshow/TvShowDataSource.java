@@ -11,6 +11,8 @@ public interface TvShowDataSource {
 
     void getDetailTvShow(int tvShowId, String lang, GetDetailDataCallback callback);
 
+    void searchTvShows(String lang, String query, GetTvShowsLoadDataCallback callback);
+
     interface GetTvShowsLoadDataCallback extends BaseLoadDataCallback<List<BaseMovie>> {}
 
     interface GetDetailDataCallback extends BaseLoadDataCallback<TvShow> {}

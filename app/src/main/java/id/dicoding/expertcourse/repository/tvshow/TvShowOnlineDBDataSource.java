@@ -1,5 +1,7 @@
 package id.dicoding.expertcourse.repository.tvshow;
 
+import androidx.annotation.NonNull;
+
 import id.dicoding.expertcourse.BuildConfig;
 import id.dicoding.expertcourse.model.TvShow;
 import id.dicoding.expertcourse.request.ApiUtil;
@@ -52,6 +54,26 @@ public class TvShowOnlineDBDataSource implements TvShowDataSource {
 
             @Override
             public void onFailure(Call<TvShow> call, Throwable t) {
+                callback.onFailure();
+            }
+        });
+    }
+
+    @Override
+    public void searchTvShows(String lang, String query, final GetTvShowsLoadDataCallback callback) {
+        movieDbApi.searchTvShows(API_KEY, lang, query).enqueue(new Callback<DiscoverMovieResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<DiscoverMovieResponse> call, @NonNull Response<DiscoverMovieResponse> response) {
+                if(!response.isSuccessful()) {
+                    callback.onFailure();
+                    return;
+                }
+
+                callback.onDataLoaded(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<DiscoverMovieResponse> call, Throwable t) {
                 callback.onFailure();
             }
         });

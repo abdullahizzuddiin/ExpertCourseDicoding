@@ -64,4 +64,10 @@
     <string name="empty_release_notification_title">No Movie Release Today!</string>
     <string name="release_notification_message">Tap for detail information</string>
     <string name="release_notification_channel_name">Release Film Notification</string>
+    <string name="icon_creator">Icons made by Dimi Kazak (Flat Icon)</string>
+    <string name="icon_creator_key" translatable="false">pref_static_field_key</string>
+    <string name="search_film_menu_title">Search Film</string>
+    <string name="search_hint">Search by film name</string>
+    <string name="empty_base_movie_message">Movie/Tv Show not found.\nTry with difference keyword</string>
+    <string name="search_activity_title">Film Search</string>
 </resources>

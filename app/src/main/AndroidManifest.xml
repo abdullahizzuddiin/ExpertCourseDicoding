@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SearchActivity"/>
         <activity android:name=".SettingActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".MainActivity">
@@ -40,21 +41,20 @@
         <service
             android:name=".widget.FavoriteMovieStackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
         <service
             android:name=".reminder_service.DailyReminderService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
     </application>
+    <permission
+        android:name="id.dicoding.expertcourse.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <permission
         android:name="id.dicoding.expertcourse.READ_DATABASE"
-        android:protectionLevel="normal" />
-    <permission
-        android:name="id.dicoding.expertcourse.WRITE_DATABASE"
         android:protectionLevel="normal" />
 
     <uses-permission android:name="android.permission.INTERNET" />

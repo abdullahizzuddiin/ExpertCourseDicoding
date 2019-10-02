@@ -30,4 +30,9 @@
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
+    <Preference
+        android:key="@string/icon_creator_key"
+        android:persistent="false"
+        android:selectable="false"
+        android:title="@string/icon_creator"/>
 </PreferenceScreen>

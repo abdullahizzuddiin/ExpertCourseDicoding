@@ -77,4 +77,24 @@ public class MovieOnlineDBDataSource implements MovieDataSource {
             }
         });
     }
+
+    @Override
+    public void searchMovies(String lang, String query, final GetMoviesDataCallback callback) {
+        movieDbApi.searchMovies(API_KEY, lang, query).enqueue(new Callback<DiscoverMovieResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<DiscoverMovieResponse> call, @NonNull Response<DiscoverMovieResponse> response) {
+                if(!response.isSuccessful()) {
+                    callback.onFailure();
+                    return;
+                }
+
+                callback.onDataLoaded(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<DiscoverMovieResponse> call, Throwable t) {
+                callback.onFailure();
+            }
+        });
+    }
 }

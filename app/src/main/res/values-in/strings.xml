@@ -43,4 +43,9 @@
     <string name="empty_release_notification_title">Tidak Ada Film Rilis Hari Ini!</string>
     <string name="release_notification_message">Klik untuk informasi lebih lengkap</string>
     <string name="release_notification_channel_name">Notifikasi Film Hari Ini</string>
+    <string name="icon_creator">Icons dibuat oleh Dimi Kazak (Flat Icon)</string>
+    <string name="search_film_menu_title">Cari Film</string>
+    <string name="search_hint">Cari berdasarkan nama film</string>
+    <string name="empty_base_movie_message">Movie/Tv Show tidak ditemukan.\nCoba kata kunci lain</string>
+    <string name="search_activity_title">Halaman Pencarian</string>
 </resources>

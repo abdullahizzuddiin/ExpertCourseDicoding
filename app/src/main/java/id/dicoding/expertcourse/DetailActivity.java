@@ -16,7 +16,6 @@ import id.dicoding.expertcourse.ui.detail_fragment.TvShowDetailFragment;
 public class DetailActivity extends AppCompatActivity {
     private final String TAG = DetailActivity.class.getName();
     private int movieType;
-    private final String FRAGMENT_TAG = "detailFragment";
     private String title;
     private int baseMovieId;
 
@@ -47,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+            String FRAGMENT_TAG = "detailFragment";
             fragmentTransaction.replace(R.id.detail_frame_container, detailFragment, FRAGMENT_TAG);
             fragmentTransaction.commit();
         }

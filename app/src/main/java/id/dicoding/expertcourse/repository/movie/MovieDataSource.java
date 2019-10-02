@@ -13,6 +13,8 @@ public interface MovieDataSource {
 
     void getDetailMovie(int movieId, String lang, GetDetailDataCallback callback);
 
+    void searchMovies(String lang, String query, GetMoviesDataCallback callback);
+
     interface GetMoviesDataCallback extends BaseLoadDataCallback<List<BaseMovie>> {}
 
     interface GetDetailDataCallback extends BaseLoadDataCallback<Movie> {}

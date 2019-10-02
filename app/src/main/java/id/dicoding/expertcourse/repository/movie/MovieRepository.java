@@ -21,4 +21,9 @@ public class MovieRepository implements MovieDataSource {
     public void getDetailMovie(int movieId, String lang, final GetDetailDataCallback callback) {
         movieDataSource.getDetailMovie(movieId, lang, callback);
     }
+
+    @Override
+    public void searchMovies(String lang, String query, GetMoviesDataCallback callback) {
+        movieDataSource.searchMovies(lang, query, callback);
+    }
 }

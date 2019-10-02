@@ -3,6 +3,9 @@ package id.dicoding.expertcourse.ui.base_movie_list;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -22,6 +25,8 @@ import java.util.Locale;
 
 import id.dicoding.expertcourse.DetailActivity;
 import id.dicoding.expertcourse.R;
+import id.dicoding.expertcourse.SearchActivity;
+import id.dicoding.expertcourse.SettingActivity;
 import id.dicoding.expertcourse.constant.MovieConst;
 import id.dicoding.expertcourse.model.BaseMovie;
 import id.dicoding.expertcourse.ui.adapter.MovieListAdapter;
@@ -36,6 +41,12 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
     private MovieListAdapter adapter;
 
     private BaseMovieListViewModel baseMovieListViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,6 +86,23 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
         super.onActivityCreated(savedInstanceState);
         subscribeObserver();
         initialStart();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            navigateToSettingView();
+        } else if (item.getItemId() == R.id.action_search) {
+            navigateToSearchView();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void subscribeObserver() {
@@ -117,6 +145,17 @@ public class BaseMovieListFragment extends Fragment implements ItemClickSupport.
     private void setupListener() {
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void navigateToSettingView() {
+        Intent settingActivityIntent = new Intent(getActivity(), SettingActivity.class);
+        startActivity(settingActivityIntent);
+    }
+
+    private void navigateToSearchView() {
+        Intent searchActivityIntent = new Intent(getActivity(), SearchActivity.class);
+        searchActivityIntent.putExtra(getString(R.string.extra_data_base_movie_type), getMovieType());
+        startActivity(searchActivityIntent);
     }
 
     private int getMovieType() {

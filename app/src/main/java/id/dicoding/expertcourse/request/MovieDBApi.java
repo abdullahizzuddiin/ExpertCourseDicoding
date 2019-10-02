@@ -22,6 +22,13 @@ public interface MovieDBApi {
             @Query("primary_release_date.gte") String primaryReleaseDateGTE,
             @Query("primary_release_date.lte") String primaryReleaseDateLTE);
 
+    @GET("search/movie")
+    Call<DiscoverMovieResponse> searchMovies(
+            @Query("api_key") String key,
+            @Query("language") String lang,
+            @Query("query") String query
+    );
+
     @GET("discover/tv")
     Call<DiscoverMovieResponse> getTvShow(
             @Query("api_key") String key,
@@ -38,5 +45,12 @@ public interface MovieDBApi {
             @Path("tvId") int tvId,
             @Query("api_key") String key,
             @Query("language") String lang);
+
+    @GET("search/tv")
+    Call<DiscoverMovieResponse> searchTvShows(
+            @Query("api_key") String key,
+            @Query("language") String lang,
+            @Query("query") String query
+    );
 
 }

@@ -1,9 +1,6 @@
 package id.dicoding.expertcourse;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,26 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupView();
         setupViewPager();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            navigateToSettingView();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void navigateToSettingView() {
-        Intent startSettingsActivity = new Intent(this, SettingActivity.class);
-        startActivity(startSettingsActivity);
     }
 
     private void setupViewPager() {

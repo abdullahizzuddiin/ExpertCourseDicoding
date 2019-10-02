@@ -16,4 +16,9 @@ public class TvShowRepository implements TvShowDataSource {
     public void getDetailTvShow(int tvShowId, String lang, final GetDetailDataCallback callback) {
         tvShowDataSource.getDetailTvShow(tvShowId, lang, callback);
     }
+
+    @Override
+    public void searchTvShows(String lang, String query, GetTvShowsLoadDataCallback callback) {
+        tvShowDataSource.searchTvShows(lang, query, callback);
+    }
 }
