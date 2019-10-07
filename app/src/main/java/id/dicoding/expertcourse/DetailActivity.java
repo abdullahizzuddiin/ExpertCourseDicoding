@@ -14,7 +14,6 @@ import id.dicoding.expertcourse.ui.detail_fragment.MovieDetailFragment;
 import id.dicoding.expertcourse.ui.detail_fragment.TvShowDetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
-    private final String TAG = DetailActivity.class.getName();
     private int movieType;
     private String title;
     private int baseMovieId;

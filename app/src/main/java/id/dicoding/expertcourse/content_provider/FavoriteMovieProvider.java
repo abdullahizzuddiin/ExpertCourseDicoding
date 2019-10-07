@@ -45,8 +45,6 @@ public class FavoriteMovieProvider extends ContentProvider {
         try {
             if (sUriMatcher.match(uri) == FAVORITE_MOVIE_ALL) {
                 cursor = appDatabase.baseMovieDao().getBaseMovieListCursor();
-            } else {
-                cursor = null;
             }
         } catch (Exception e) {
             Log.d("TAG", e.getMessage());
